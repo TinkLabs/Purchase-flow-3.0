@@ -11,7 +11,7 @@ defaults: &defaults
         - v1-dependencies-
     - run: 
         name: Install packages
-        command: npm i
+        command: npm install
     - save_cache:
         paths:
           - node_modules
@@ -26,11 +26,8 @@ defaults: &defaults
         name: Install aws command line
         command: sudo pip install awscli --upgrade
     - run:
-        name: Deploy $ENV
+        name: Deploy
         command: CI=false npm run build && aws s3 sync build/ $S3_BUCKET --delete
-    - run:
-        name: activate cloud front
-        command: aws configure set preview.cloudfront true && aws configure set preview.create-invalidation true
 version: 2
 jobs:
   deploy-dev:
