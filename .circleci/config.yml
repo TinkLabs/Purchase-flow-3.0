@@ -27,7 +27,7 @@ defaults: &defaults
         command: sudo pip install awscli --upgrade
     - run:
         name: Deploy $ENV
-        command: cross-env CI=false npm run build && aws s3 sync build/ $S3_BUCKET --delete
+        command: npm run build && aws s3 sync build/ $S3_BUCKET --delete
     - run:
         name: activate cloud front
         command: aws configure set preview.cloudfront true && aws configure set preview.create-invalidation true
