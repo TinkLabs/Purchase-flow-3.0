@@ -18,8 +18,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy": "cross-env CI=false npm run build && aws s3 sync build/ s3://purchase-flow.handytravel.tech/test --delete"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
