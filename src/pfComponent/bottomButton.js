@@ -150,7 +150,7 @@ class BottomButton extends React.Component{
                     this.chooseDate = `${chooseMonth[0].label} ${this.props.verifyUserInf.passtime.date}, ${this.props.verifyUserInf.passtime.year} ${this.props.verifyUserInf.passtime.shifenmiao}`
                 }
                 this.confirmBodyPar = {
-                    "answers": this.props.verifyUserInf.packageInfo.answers || {},
+                    "answers": this.props.verifyUserInf.answers || {},
                     "date": this.chooseDate,
                     "dealId": this.props.verifyUserInf.dealId,
                     "packageId": this.props.verifyUserInf.packageInfo.id,
