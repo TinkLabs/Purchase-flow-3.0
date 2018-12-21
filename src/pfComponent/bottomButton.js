@@ -163,10 +163,10 @@ class BottomButton extends React.Component{
                         "email": this.props.verifyUserInf.userInfo.email,
                     }
                 }
-                let result = await request.confirmDealInfo(this.confirmBodyPar)
-                // const result = {
-                //     success: true
-                // }
+                // let result = await request.confirmDealInfo(this.confirmBodyPar)
+                const result = {
+                    success: true
+                }
                 if (result.success) {
                     this.props.onHandleFirstConfirm('',true);
                     this.setState({sum: 0});
@@ -190,7 +190,7 @@ class BottomButton extends React.Component{
         const { classes } = this.props;
         const { vertical, horizontal, open } = this.state;
         return (
-            <div style={{paddingRight:20,paddingLeft:20}}>
+            <div style={{paddingRight:20,paddingLeft:20,backgroundColor: '#f4f4f4'}}>
                 {this.state.bottonButtonText === 'PAY NOW' && <a className={classes.payNowBtn} href={this.iLink}>PAY NOW</a>}
                 {this.state.bottonButtonText !== 'PAY NOW' && <Button id='bottomButton' variant="contained" buttontext={this.state.bottonButtonText} color="secondary" onClick={this.handleBottomButton} disabled={this.state.sum>0? false: true}  className={classes.button}>
                     {this.state.bottonButtonText}

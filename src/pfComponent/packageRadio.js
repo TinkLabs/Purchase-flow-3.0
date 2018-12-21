@@ -63,7 +63,7 @@ class PackageRadio extends React.Component {
                 //minimumPax 判断
                 if(packageList[i].minimumPax > 1){
                     packageList[i].showExtral = true;
-                    packageList[i].showMinimumExtral = true;
+                    packageList[i].showMinimumExtral = true; //显示minimum reminder的标志
                 }
                 //dates 判断
                 if(packageList[i].dates.length == 0){
