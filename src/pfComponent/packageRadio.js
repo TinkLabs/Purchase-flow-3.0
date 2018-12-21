@@ -63,6 +63,7 @@ class PackageRadio extends React.Component {
                 //minimumPax 判断
                 if(packageList[i].minimumPax > 1){
                     packageList[i].showExtral = true;
+                    packageList[i].showMinimumExtral = true;
                 }
                 //dates 判断
                 if(packageList[i].dates.length == 0){
@@ -124,7 +125,7 @@ class PackageRadio extends React.Component {
                                             {number.displayPrice.original > number.displayPrice.discounted && (Number.isInteger(number.displayPrice.original) ? number.displayPrice.original : number.displayPrice.original.toFixed(2)) }
                                         </span>
                                     </div>
-                                    {number.showExtral ? <div className='extraDiscount'>Buy more for extra discount</div> : ''}
+                                    {number.showExtral || number.showMinimumExtral ? (number.showExtral && number.showMinimumExtral ? <div className='extraDiscount'>You must select {number.minimumPax} or more for this package</div> : <div className='extraDiscount'>Buy more for extra discount</div>) : ''}
                                 </div>}                  
                                 labelPlacement="start"
                                 style={{ position: 'relative',height:'90px'}}
