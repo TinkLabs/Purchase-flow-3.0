@@ -2232,7 +2232,7 @@
         "id": 52,
         "type": "percentage",
         "value": 10,
-        "title": "10% OFF UPON $200 OR ABOVE",
+        "title": "Regression QA-10",
         "message": "Enjoy 10% off upon purchase of $200 or above",
         "conditions": {
         "price_total": {
@@ -2243,7 +2243,7 @@
     {
         "id": 53,
         "type": "percentage",
-        "value": 11,
+        "value": 30,
         "title": "30% OFF UPON $200 OR ABOVE",
         "message": "Enjoy 20% off upon purchase of $200 or above",
         "conditions": {

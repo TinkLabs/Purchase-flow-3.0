@@ -155,7 +155,7 @@ const styles = theme => ({
             </div>
             {this.props.confirmInfo.promotionItem && <div className='confirmationPackageList'>
               <span className={classes.promotionInfo}>
-                Regression QA-{this.props.confirmInfo.promotionItem.ratio}%</span>
+                {this.props.confirmInfo.promotionItem.title}</span>
               <span className={classes.promotionInfoRight}>-{currency} {discountPrice}</span>
             </div>}
           </List>
