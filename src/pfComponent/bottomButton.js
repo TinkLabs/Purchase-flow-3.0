@@ -40,10 +40,11 @@ class BottomButton extends React.Component{
             userInf: {},
             email: '',
             open: false,
-            vertical: 'top',
+            vertical: 'bottom',
             horizontal: 'center',
-            confirmInfo: ''
-          
+            confirmInfo: '',
+            warnmessage: ''
+
         }
         this.handleBottomButton = this.handleBottomButton.bind(this);
         this.confirmBodyPar = {};
@@ -110,6 +111,7 @@ class BottomButton extends React.Component{
     handleClose = () => {
         this.setState({ open: false });
       };
+
     async handleBottomButton(e){ 
         if(e.currentTarget.getAttribute('buttontext') == 'NEXT'){
             this.props.onHandleNext(true);
@@ -163,10 +165,10 @@ class BottomButton extends React.Component{
                         "email": this.props.verifyUserInf.userInfo.email,
                     }
                 }
-                // let result = await request.confirmDealInfo(this.confirmBodyPar)
-                const result = {
-                    success: true
-                }
+                let result = await request.confirmDealInfo(this.confirmBodyPar)
+                // const result = {
+                //     success: true
+                // }
                 if (result.success) {
                     this.props.onHandleFirstConfirm('',true);
                     this.setState({sum: 0});
@@ -176,7 +178,23 @@ class BottomButton extends React.Component{
                     })
                 }
                 } else {
+                    if(!this.state.userInf.userInfo){
+                        this.setState({warnmessage: 'Please enter passport first name.'});
+                    }else if(!this.state.userInf.userInfo.firstName){
+                        this.setState({warnmessage: 'Please enter passport first name.'});
+                    }else if(!this.state.userInf.userInfo.lastName){
+                        this.setState({warnmessage: 'Please enter passport last name.'});
+                    }else if(!emailFlag){
+                        this.setState({warnmessage: 'Please enter a valid email address.'});
+                    }else if(!questionFlag){
+                        this.setState({warnmessage: 'Please answer the question.'});
+                    }
+                    console.log(this.state.userInf.userInfo);
                     this.handleClick();
+                    //3.5s后warnmessage消失
+                    setTimeout(() => {
+                        this.handleClose();
+                    }, 3500);
                     this.props.onHandleFirstConfirm('',false);
                     this.setState({sum: 1});
                 }
@@ -190,21 +208,21 @@ class BottomButton extends React.Component{
         const { classes } = this.props;
         const { vertical, horizontal, open } = this.state;
         return (
-            <div style={{paddingRight:20,paddingLeft:20,backgroundColor: '#f4f4f4'}}>
+            <div style={{paddingRight:20,paddingLeft:20,backgroundColor: '#f4f4f4',position:'fixed',bottom:0,width:'100%'}}>
                 {this.state.bottonButtonText === 'PAY NOW' && <a className={classes.payNowBtn} href={this.iLink}>PAY NOW</a>}
                 {this.state.bottonButtonText !== 'PAY NOW' && <Button id='bottomButton' variant="contained" buttontext={this.state.bottonButtonText} color="secondary" onClick={this.handleBottomButton} disabled={this.state.sum>0? false: true}  className={classes.button}>
                     {this.state.bottonButtonText}
-                </Button>}
-                <p>{this.state.confirmInfo}</p>
+                </Button>} 
                 <Snackbar
-                    anchorOrigin={{ vertical, horizontal }}
-                    open={open}
-                    onClose={this.handleClose}
-                    ContentProps={{
-                        'aria-describedby': 'message-id',
-                    }}
-                    message={<span id="message-id">Please fill in the whole user information which include your firstName、lastName、Email or the questios!</span>}
-                    />
+                style={{marginBottom: '52px'}}
+                anchorOrigin={{ vertical, horizontal }}
+                open={open}
+                onClose={this.handleClose}
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">{this.state.warnmessage}</span>}
+                />           
             </div>
         )
     }    

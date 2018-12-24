@@ -76,21 +76,21 @@ class App extends Component {
 
   componentDidMount(){
     // 本地数据
-    fetch('../localData/dealStepTwo.json')
-    .then(res => res.json())
-    .then( data => {
-      this.setState({
-        packages: data.packages,
-        questions: data.questions,
-        promotionList: data.promotions,
-        // confirmation info 需要的数据都在 confirmInfo 对象中
-        confirmInfo: {
-          optIn: data.optIn,
-        }
-      })}
-    )
+    // fetch('../localData/dealStepTwo.json')
+    // .then(res => res.json())
+    // .then( data => {
+    //   this.setState({
+    //     packages: data.packages,
+    //     questions: data.questions,
+    //     promotionList: data.promotions,
+    //     // confirmation info 需要的数据都在 confirmInfo 对象中
+    //     confirmInfo: {
+    //       optIn: data.optIn,
+    //     }
+    //   })}
+    // )
 
-    // this.getDealStepInfo()
+    this.getDealStepInfo()
   }
 
   //暫時沒用
@@ -275,7 +275,7 @@ class App extends Component {
     }
     
     return (
-      <div>
+      <div style={{paddingBottom:'50px'}}>
         {/* <SelectPackage /> */}
         <PackageRadio packages={this.state.packages} getPackageInfo={this.handleConfirmInfo} onChangeAllFlag={this.changeAllFlag} belowFlagOne={this.state.nextstate} belowFlagTwo={this.state.afterFirstConfirm} selectIdPackageDateLengthTwo={this.state.selectIdPackageDateLengthTwo} quantityDisplay={this.state.quantityDisplay}/>
         {/* <SelectTime /> */}
