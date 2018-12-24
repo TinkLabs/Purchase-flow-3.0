@@ -74,15 +74,16 @@ class BottomButton extends React.Component{
         if(this.state.userInf.checkedInfo){
             if(this.state.userInf.checkedInfo.terms){
                 this.setState({bottonButtonText : 'PAY NOW'})
-                
-                this.confirmBodyPar.optIn = this.props.verifyUserInf.optIn.isRender
-                console.log(this.confirmBodyPar)
+                if (this.state.userInf.checkedInfo.optIn) {
+                    this.confirmBodyPar.optIn = 'true'
+                } else {
+                    this.confirmBodyPar.optIn = 'false'
+                }
                 Object.keys(this.confirmBodyPar).forEach(key => {
                     if (!this.confirmBodyPar[key]) {
                         delete this.confirmBodyPar[key]
                     }
                 })
-                console.log(this.confirmBodyPar)
                 this.iLink = `dealpaymentoptions:${JSON.stringify(this.confirmBodyPar)}`
                 this.state.userInf.checkedInfo = undefined; //防止将上面的点击apply remove时的buttontext覆盖；
             }else{
@@ -165,10 +166,10 @@ class BottomButton extends React.Component{
                         "email": this.props.verifyUserInf.userInfo.email,
                     }
                 }
-                let result = await request.confirmDealInfo(this.confirmBodyPar)
-                // const result = {
-                //     success: true
-                // }
+                // let result = await request.confirmDealInfo(this.confirmBodyPar)
+                const result = {
+                    success: true
+                }
                 if (result.success) {
                     this.props.onHandleFirstConfirm('',true);
                     this.setState({sum: 0});

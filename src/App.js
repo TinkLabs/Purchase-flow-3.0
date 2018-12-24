@@ -67,7 +67,7 @@ class App extends Component {
         //   optIn: this.dealStepData.optIn,
         // }
       })
-      this.handleConfirmInfo('optIn', this.dealStepData.optIn)
+      // this.handleConfirmInfo('optIn', this.dealStepData.optIn)
       this.handleConfirmInfo('dealId', this.dealStepData.dealId)
     } catch (e) {
       console.log(e)
@@ -76,21 +76,21 @@ class App extends Component {
 
   componentDidMount(){
     // 本地数据
-    // fetch('../localData/dealStepTwo.json')
-    // .then(res => res.json())
-    // .then( data => {
-    //   this.setState({
-    //     packages: data.packages,
-    //     questions: data.questions,
-    //     promotionList: data.promotions,
-    //     // confirmation info 需要的数据都在 confirmInfo 对象中
-    //     confirmInfo: {
-    //       optIn: data.optIn,
-    //     }
-    //   })}
-    // )
+    fetch('../localData/dealStepTwo.json')
+    .then(res => res.json())
+    .then( data => {
+      this.setState({
+        packages: data.packages,
+        questions: data.questions,
+        promotionList: data.promotions,
+        // confirmation info 需要的数据都在 confirmInfo 对象中
+        confirmInfo: {
+          optIn: data.optIn,
+        }
+      })}
+    )
 
-    this.getDealStepInfo()
+    // this.getDealStepInfo()
   }
 
   //暫時沒用
@@ -172,7 +172,6 @@ class App extends Component {
     });
     //接收点击apply remove 传过来的false
     if(flag == false){
-      console.log(this.state.confirmInfo);
       const tmpConfirmInfo = this.state.confirmInfo;
       tmpConfirmInfo[index]= 'buttonTextone';
       this.setState({
