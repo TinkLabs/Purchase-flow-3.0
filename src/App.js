@@ -166,9 +166,10 @@ class App extends Component {
     })
   }
 
-  handleFirstConfirm(index,flag){
+  handleFirstConfirm(index,flag,flagNext){
     this.setState({
-      afterFirstConfirm: flag
+      afterFirstConfirm: flag,
+      applyandRemove: flagNext //用来控制 apply remove 再第一次点击confirm后  保持不变
     });
     //接收点击apply remove 传过来的false
     if(flag == false){
@@ -231,6 +232,7 @@ class App extends Component {
       }    
     }  
   }
+
   render() {
     let that = this;
     let selectIdPackage;
@@ -288,7 +290,7 @@ class App extends Component {
             packageId={ this.state.packageid }
             getQuestionListAnswers={this.handleConfirmInfo}/>
         }
-        {this.state.nextstate && <Promotionlist promotionList={promotionList} peopleandprice={this.state.peopleandPrice} onHandlePromotionTitle={this.handleConfirmInfo} onHandleConfirmAppear={this.handleFirstConfirm} confirmAppear={this.state.afterFirstConfirm}/>}
+        {this.state.nextstate && <Promotionlist applyandRemove={this.state.applyandRemove} promotionList={promotionList} peopleandprice={this.state.peopleandPrice} onHandlePromotionTitle={this.handleConfirmInfo} onHandleConfirmAppear={this.handleFirstConfirm} confirmAppear={this.state.afterFirstConfirm}/>}
         {this.state.afterFirstConfirm && <Confirmation confirmInfo={this.state.confirmInfo} getCheckedInfo={this.handleConfirmInfo}/>}
         <BottomButton quantityContral={this.state.quantityContral} onHandleNext={this.handleNext} onHandleFirstConfirm={this.handleFirstConfirm} verifyUserInf={this.state.confirmInfo}/>
       </div>

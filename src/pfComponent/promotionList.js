@@ -5,6 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import ErrorIcon from '@material-ui/icons/ErrorOutline';
 
 import '../App.css';
 
@@ -20,7 +21,8 @@ class Promotionlist extends React.Component {
       peopleandprice: {},
       usediscountedPrice: [],
       totalNo: 0,
-      promotionTitle: ''
+      promotionTitle: '',
+      applyDim: []
     };
     this.handleApplyorNot = this.handleApplyorNot.bind(this);
     this.promotionItem = {}
@@ -39,18 +41,39 @@ class Promotionlist extends React.Component {
     this.setState({ open: false });
   };
 
-  componentWillReceiveProps(nextProps) {
-    this.state.promotionList = nextProps.promotionList;
-    if (nextProps.peopleandprice != undefined) {
-      let totalnum = 0;
-      this.state.peopleandprice = nextProps.peopleandprice;
-      for (let i = 0; i < this.state.peopleandprice.number.length; i++) {
-        this.state.usediscountedPrice[i] = false;
-        totalnum += this.state.peopleandprice.number[i] * this.state.peopleandprice.price[i];
-      }
-      this.setState({ totalNo: totalnum })
+    componentWillReceiveProps(nextProps) {
+        this.state.promotionList = nextProps.promotionList;
+        console.log(nextProps.promotionList);
+        if (nextProps.peopleandprice != undefined) {
+          let totalnum = 0;
+          this.state.peopleandprice = nextProps.peopleandprice;
+  
+          for (let i = 0; i < this.state.peopleandprice.number.length; i++) {
+            //通过判断applyandRemove 第一次点confirm时 保留apply confirm 状态
+            if(nextProps.applyandRemove != false){
+              this.state.usediscountedPrice[i] = false;           
+            }        
+            totalnum += this.state.peopleandprice.number[i] * this.state.peopleandprice.price[i];
+          }
+
+          this.setState({ totalNo: totalnum });
+          for(let j = 0; j<nextProps.promotionList.length; j++){
+            if(nextProps.promotionList[j].conditions){
+              //总价小于条件最小值禁止按apply按钮
+              if(totalnum < nextProps.promotionList[j].conditions.price_total.minimum){
+                let tmpapplyDim = this.state.applyDim;
+                tmpapplyDim[j] = true;
+                this.setState({
+                  applyDim: tmpapplyDim
+                })
+                // this.state.applyDim[j] = true;
+              }
+            }
+          }
+        }  
     }
-  }
+  
+
 
   //promotionlist 里面只能选择一个折扣价
   useApplyOnce(index){
@@ -105,8 +128,8 @@ class Promotionlist extends React.Component {
         {promotionList.map(function (ele, index) {
           return (
             <div style={{ overflow: 'hidden' }} key={index}>
-              <Button style={{ color: '#ff8400' }} onClick={that.handleClickOpen.bind(this, ele.title, ele.message)}>{ele.title}</Button>
-              <Button style={{ color: '#ff8400', float: 'right' }} onClick={that.handleApplyorNot.bind(this, index)}>{that.state.usediscountedPrice[index] ? 'REMOVE' : 'APPLY'}</Button>
+              <Button style={{ color: '#ff8400' }} onClick={that.handleClickOpen.bind(this, ele.title, ele.message)}><ErrorIcon style={{color: "#ff8400",fontSize:'20px'}} />{ele.title}</Button>
+              <Button style={{ color: (that.state.applyDim[index] ? '#d8d8d8':'#ff8400'), float: 'right' }} disabled={that.state.applyDim[index]? true:false} onClick={that.handleApplyorNot.bind(this, index)}>{that.state.usediscountedPrice[index] ? 'REMOVE' : 'APPLY'}</Button>
             </div>
           );
         })}
@@ -129,8 +152,6 @@ class Promotionlist extends React.Component {
           </DialogActions>
         </Dialog>
       </div>
-
-
     );
   }
 }

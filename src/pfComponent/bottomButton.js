@@ -171,7 +171,7 @@ class BottomButton extends React.Component{
                     success: true
                 }
                 if (result.success) {
-                    this.props.onHandleFirstConfirm('',true);
+                    this.props.onHandleFirstConfirm('',true,false); //第三个参数用来控制第一次点击confirm后 apply remove 标志不变。
                     this.setState({sum: 0});
                 } else {
                     this.setState({
@@ -179,6 +179,7 @@ class BottomButton extends React.Component{
                     })
                 }
                 } else {
+                    console.log(this.state.userInf);
                     if(!this.state.userInf.userInfo){
                         this.setState({warnmessage: 'Please enter passport first name.'});
                     }else if(!this.state.userInf.userInfo.firstName){
@@ -190,7 +191,6 @@ class BottomButton extends React.Component{
                     }else if(!questionFlag){
                         this.setState({warnmessage: 'Please answer the question.'});
                     }
-                    console.log(this.state.userInf.userInfo);
                     this.handleClick();
                     //3.5s后warnmessage消失
                     setTimeout(() => {

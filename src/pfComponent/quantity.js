@@ -280,7 +280,7 @@ class Quantity extends Component {
                 {this.state.dealitemTypes.map(function (ele, index) {
                     return (
                         <Grid container spacing={24} key={index}>
-                            <Grid item xs={7}>
+                            <Grid item xs={8}>
                                 <div className={classes.paper}>
                                     <div style={{ textAlign: 'left' }}>{ele.title}</div>
                                     <div style={{ textAlign: 'left', marginTop: 5 }}>
@@ -291,7 +291,7 @@ class Quantity extends Component {
                                     
                                 </div>
                             </Grid>
-                            <Grid item xs={5}>
+                            <Grid item xs={4}>
                                 <div id='quantityRight' className={classes.paper}>
                                     <span className='quantityNo'>{that.state.quantity[index]}</span>
                                     <div className='quantityjiajian'>

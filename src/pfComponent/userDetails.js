@@ -27,6 +27,9 @@ class Userdetails extends Component {
         this.userInfo = {}
     }
 
+    componentDidMount() {
+        this.sendUserInfoToParent(); //清空userInfo;
+    }
     handleChange1(e){
         this.setState({value1: e.target.value});
         if(e.target.value.length == 0){
@@ -60,13 +63,16 @@ class Userdetails extends Component {
         this.sendUserInfoToParent(this.userInfo) 
     }
 
-    sendUserInfoToParent(userInfo) {
+    sendUserInfoToParent(userInfo = {}) {
       this.props.getUserInfo('userInfo', userInfo)
     }
+ 
+   
     render(){
         const { classes } = this.props;
         var detailWidth = {
-                width:'100%'
+                width:'100%',
+                backgroundColor: "#f4f4f4"
             }
         let value1 = this.state.value1;
         let value2 = this.state.value2;
@@ -81,7 +87,8 @@ class Userdetails extends Component {
                 id='1'
                 value={value1}
                 onChange={this.handleChange1}
-                
+                autoFocus={true}
+                disableUnderline={true}
             />   
             <Input
                 placeholder="Passport Last Name"
@@ -90,6 +97,7 @@ class Userdetails extends Component {
                 id='2'
                 value={value2}
                 onChange={this.handleChange2}
+                disableUnderline={true}
             /> 
             <Input
                 placeholder="Email Address to Receive Voucher"
@@ -101,6 +109,7 @@ class Userdetails extends Component {
                 id='3'
                 value={value3}
                 onChange={this.handleChange3}
+                disableUnderline={true}
             />        
             </div>
         );

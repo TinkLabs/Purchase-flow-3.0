@@ -173,7 +173,7 @@ const styles = theme => ({
                 />
                 <ListItemText
                   style={{padding: '0 0', fontSize: '14px'}}
-                  primary={`handy may use54 my email to send communications.(You may opy out at anytime)`} 
+                  primary={`handy may use my email to send communications.(You may opt out at anytime)`} 
                 />
                
               </ListItem>
