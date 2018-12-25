@@ -166,10 +166,10 @@ class BottomButton extends React.Component{
                         "email": this.props.verifyUserInf.userInfo.email,
                     }
                 }
-                // let result = await request.confirmDealInfo(this.confirmBodyPar)
-                const result = {
-                    success: true
-                }
+                let result = await request.confirmDealInfo(this.confirmBodyPar)
+                // const result = {
+                //     success: true
+                // }
                 if (result.success) {
                     this.props.onHandleFirstConfirm('',true);
                     this.setState({sum: 0});

@@ -1,7 +1,14 @@
 // 请求服务器host
 import { Base64 } from 'js-base64';
-const host = 'https://staging.handy.travel';
-// const host = 'https://www.lansheng8.com'
+
+let host;
+
+// 根据不同环境设置不同域名
+if (process.env.NODE_ENV === 'development') {
+  host = ''
+} else {
+  host = 'https://staging.handy.travel';
+}
 
 // webview 获取当前 handy 设备信息
 let handyInfo = {},
