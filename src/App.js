@@ -69,6 +69,7 @@ class App extends Component {
       })
       // this.handleConfirmInfo('optIn', this.dealStepData.optIn)
       this.handleConfirmInfo('dealId', this.dealStepData.dealId)
+      this.handleConfirmInfo('isRender', this.dealStepData.optIn.isRender)
     } catch (e) {
       console.log(e)
     }

@@ -52,6 +52,7 @@ const styles = theme => ({
   class Confirmation extends React.Component {
     constructor(props) {
       super(props)
+      console.log(props, 29999)
       this.state = {
         selectedIndex: 1,
         questionList: [],
@@ -162,9 +163,9 @@ const styles = theme => ({
           <Divider />
           <List component="nav">
             <div className='confirmationTotalHeader'>
-              <span>TOTAL</span><span className='confirmationTotalHeaderRight'>HKD {actualPayment}</span>
+              <span>TOTAL</span><span className='confirmationTotalHeaderRight'>{currency} {actualPayment}</span>
             </div>
-            {this.props.confirmInfo.optIn.isRender && [0].map(value => (
+            {this.props.confirmInfo.isRender && [0].map(value => (
               <ListItem key={value} role={undefined} dense button onClick={this.handleToggle(value)}>
                 <Checkbox
                   checked={this.state.checked.indexOf(value) !== -1}
