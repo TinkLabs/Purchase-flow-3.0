@@ -273,6 +273,7 @@ class Quantity extends Component {
     render() {  
         const { classes } = this.props;        
         let that = this;
+        const currency = this.props.confirmInfo.packageInfo.currency
      
         return (
             <div className={classes.root}>
@@ -284,10 +285,10 @@ class Quantity extends Component {
                                 <div className={classes.paper}>
                                     <div style={{ textAlign: 'left' }}>{ele.title}</div>
                                     <div style={{ textAlign: 'left', marginTop: 5 }}>
-                                        <span className='quantityInitialPrice'>HKD {that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]}</span>
-                                        <span className='midDelete'>HKD {that.state.originalPrice[index]}</span>
+                                        <span className='quantityInitialPrice'>{currency} {that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]}</span>
+                                        <span className='midDelete'>{currency} {that.state.originalPrice[index]}</span>
                                     </div>
-                                    {that.state.isdiscountReminderDisplay[index] && <div style={{ textAlign: 'left' }}>Buy {that.state.numbermore[index]} more to save HKD {that.state.morediscountprice[index]}</div>}
+                                    {that.state.isdiscountReminderDisplay[index] && <div style={{ textAlign: 'left' }}>Buy {that.state.numbermore[index]} more to save {currency} {that.state.morediscountprice[index]}</div>}
                                     
                                 </div>
                             </Grid>

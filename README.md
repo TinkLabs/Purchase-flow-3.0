@@ -42,3 +42,11 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Deployment
+
+Using [CircleCI](https://circleci.com/) for CI/CD, if develop/staging/master branch received new code the corresponding environment (development/staging/production) will auto update. 
+
+## proxy
+
+When you developed in local, you can call online API directly and needn't worry about CORS problem, because I have configured proxy, for more information click this link [Proxying API Requests in Development](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development)
