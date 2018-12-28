@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import request from './api/request';
 import utils from './utils';
 
-import zh_CN from './locale/zh_CN';
+// import zh_CN from './locale/zh_CN';
 import { FormattedMessage } from 'react-intl';
 import intl from 'intl';
 
