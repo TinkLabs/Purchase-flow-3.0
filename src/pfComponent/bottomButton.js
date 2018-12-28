@@ -177,7 +177,11 @@ class BottomButton extends React.Component{
                         this.props.onHandleFirstConfirm('',true,false); //第三个参数用来控制第一次点击confirm后 apply remove 标志不变。
                         this.setState({sum: 0});
                     } else {
-                        this.handleClick(result.message)
+                        this.handleClick(result.message);
+                        //3.5s后warnmessage消失
+                        setTimeout(() => {
+                            this.handleClose();
+                        }, 3500);
                     }
                 } else {
                     console.log(this.state.userInf);
