@@ -52,11 +52,11 @@ class Quantity extends Component {
         for(let i = 0; i<this.state.dealitemTypes.length; i++){
             this.state.peopleandPrice.title[i] = this.state.dealitemTypes[i].title;
             this.state.peopleandPrice.id[i] = this.state.dealitemTypes[i].id;
-            //判断购买上限
+            //判断购买上限 不能超过package里的maximumPax
             if(this.state.dealitemTypes[i].maxQuantity != -1){
-                this.state.maxQuantity[i] = this.state.dealitemTypes[i].maxQuantity;
+                this.state.maxQuantity[i] = this.state.dealitemTypes[i].maxQuantity > this.props.packages.maximumPax ? this.props.packages.maximumPax : this.state.dealitemTypes[i].maxQuantity;
             }else{
-                this.state.maxQuantity[i] = 9999;
+                this.state.maxQuantity[i] = this.props.packages.maximumPax;
             }
             //判断最低购买要求
             if(this.state.dealitemTypes[i].minQuantity > 0){
@@ -282,11 +282,11 @@ class Quantity extends Component {
                     return (
                         <Grid container spacing={24} key={index}>
                             <Grid item xs={8}>
-                                <div className={classes.paper}>
+                                <div className={classes.paper} style={{height:'80px'}}>
                                     <div style={{ textAlign: 'left' }}>{ele.title}</div>
                                     <div style={{ textAlign: 'left', marginTop: 5 }}>
                                         <span className='quantityInitialPrice'>{currency} {that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]}</span>
-                                        <span className='midDelete'>{currency} {that.state.originalPrice[index]}</span>
+                                        <span className='midDelete'>{that.state.originalPrice[index] > (that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]) ? currency + that.state.originalPrice[index] : null }</span>
                                     </div>
                                     {that.state.isdiscountReminderDisplay[index] && <div style={{ textAlign: 'left' }}>Buy {that.state.numbermore[index]} more to save {currency} {that.state.morediscountprice[index]}</div>}
                                     

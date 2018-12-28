@@ -105,8 +105,11 @@ class BottomButton extends React.Component{
         
     }
 
-    handleClick(){
-        this.setState({ open: true});
+    handleClick(msg){
+        this.setState({ 
+            warnmessage: msg,
+            open: true
+        });
       };
     
     handleClose = () => {
@@ -142,56 +145,54 @@ class BottomButton extends React.Component{
                 //所有验证通过向后台发送数据
                 if(questionFlag && emailFlag && this.state.userInf.userInfo.firstName && this.state.userInf.userInfo.lastName){
                     // 验证通过发给后台校验
-                const quantities = {}
-                this.props.verifyUserInf.priceInfo.forEach(item => {
-                    quantities[item.id] = item.count
-                })
-                if (this.props.verifyUserInf.passtime) {
-                    const chooseMonth = monthDict.filter(item => {
-                        return item.value === this.props.verifyUserInf.passtime.month
+                    const quantities = {}
+                    this.props.verifyUserInf.priceInfo.forEach(item => {
+                        quantities[item.id] = item.count
                     })
-                    this.chooseDate = `${chooseMonth[0].label} ${this.props.verifyUserInf.passtime.date}, ${this.props.verifyUserInf.passtime.year} ${this.props.verifyUserInf.passtime.shifenmiao}`
-                }
-                this.confirmBodyPar = {
-                    "answers": this.props.verifyUserInf.answers || {},
-                    "date": this.chooseDate,
-                    "dealId": this.props.verifyUserInf.dealId,
-                    "packageId": this.props.verifyUserInf.packageInfo.id,
-                    "promotionId": this.props.verifyUserInf.promotionItem ? this.props.verifyUserInf.promotionItem.id : '',
-                    "quantities": quantities,
-                    "timeslotId": this.props.verifyUserInf.timeslotId,
-                    "userInfo": {
-                        "firstName": this.props.verifyUserInf.userInfo.firstName,
-                        "lastName": this.props.verifyUserInf.userInfo.lastName,
-                        "email": this.props.verifyUserInf.userInfo.email,
+                    if (this.props.verifyUserInf.passtime) {
+                        const chooseMonth = monthDict.filter(item => {
+                            return item.value === this.props.verifyUserInf.passtime.month
+                        })
+                        this.chooseDate = `${chooseMonth[0].label} ${this.props.verifyUserInf.passtime.date}, ${this.props.verifyUserInf.passtime.year} 00:00:00`
                     }
-                }
-                let result = await request.confirmDealInfo(this.confirmBodyPar);
-                // const result = {
-                //     success: true
-                // }
-                if (result.success) {
-                    this.props.onHandleFirstConfirm('',true,false); //第三个参数用来控制第一次点击confirm后 apply remove 标志不变。
-                    this.setState({sum: 0});
-                } else {
-                    this.setState({
-                        confirmInfo: result.message
-                    })
-                }
+                    this.confirmBodyPar = {
+                        "answers": this.props.verifyUserInf.answers || {},
+                        "date": this.chooseDate,
+                        "dealId": this.props.verifyUserInf.dealId,
+                        "packageId": this.props.verifyUserInf.packageInfo.id,
+                        "promotionId": this.props.verifyUserInf.promotionItem ? this.props.verifyUserInf.promotionItem.id : '',
+                        "quantities": quantities,
+                        "timeslotId": this.props.verifyUserInf.timeslotId,
+                        "userInfo": {
+                            "firstName": this.props.verifyUserInf.userInfo.firstName,
+                            "lastName": this.props.verifyUserInf.userInfo.lastName,
+                            "email": this.props.verifyUserInf.userInfo.email,
+                        }
+                    }
+                    let result = await request.confirmDealInfo(this.confirmBodyPar);
+                    // const result = {
+                    //     success: true
+                    // }
+                    if (result.success) {
+                        this.props.onHandleFirstConfirm('',true,false); //第三个参数用来控制第一次点击confirm后 apply remove 标志不变。
+                        this.setState({sum: 0});
+                    } else {
+                        this.handleClick(result.message)
+                    }
                 } else {
                     console.log(this.state.userInf);
                     if(!this.state.userInf.userInfo){
-                        this.setState({warnmessage: 'Please enter passport first name.'});
+                        this.handleClick('Please enter passport first name.')
                     }else if(!this.state.userInf.userInfo.firstName){
-                        this.setState({warnmessage: 'Please enter passport first name.'});
+                        this.handleClick('Please enter passport first name.')
                     }else if(!this.state.userInf.userInfo.lastName){
-                        this.setState({warnmessage: 'Please enter passport last name.'});
+                        this.handleClick('Please enter passport last name.')
                     }else if(!emailFlag){
-                        this.setState({warnmessage: 'Please enter a valid email address.'});
+                        this.handleClick('Please enter a valid email address.')
                     }else if(!questionFlag){
-                        this.setState({warnmessage: 'Please answer the question.'});
+                        this.handleClick('Please answer the question.')
                     }
-                    this.handleClick();
+                  
                     //3.5s后warnmessage消失
                     setTimeout(() => {
                         this.handleClose();

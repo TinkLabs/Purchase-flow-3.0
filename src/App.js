@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import 'whatwg-fetch';
 import './App.css';
 
@@ -21,6 +22,10 @@ import PropTypes from 'prop-types';
 import request from './api/request';
 import utils from './utils';
 
+import zh_CN from './locale/zh_CN';
+import { FormattedMessage } from 'react-intl';
+import intl from 'intl';
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -37,7 +42,7 @@ class App extends Component {
       selectIdPackageDateLengthTwo: 1,
       controlQuantity: true,
       selectIdPackage: {}, //new
-      selectIdPackageDateLength: 0,
+      selectIdPackageDateLength: 0, //通过判断date.length判断日期的显示
       dealitemTypes: []
     };
     this.handlePackageid = this.handlePackageid.bind(this);
@@ -91,7 +96,7 @@ class App extends Component {
     //   })}
     // )
 
-    this.getDealStepInfo()
+    this.getDealStepInfo();
   }
 
   //暫時沒用
@@ -103,9 +108,28 @@ class App extends Component {
 
   //接收子組件傳來的年月日
   handleSelectedDate(date,passtime){
+    let timeslotlength; // 判断有无timeslot 进而渲染quantity
+   for(let i = 0; i<this.state.selectIdPackage.dates.length; i++){
+     if(date === this.state.selectIdPackage.dates[i].date.substring(8,10)){
+      timeslotlength = this.state.selectIdPackage.dates[i].timeslots.length;
+     }
+   };
+   console.log(timeslotlength);
+   if(timeslotlength > 0){
     this.setState({
-      selectedDate: date
+      selectedDate: date,
+      quantityDisplay: false 
     });
+   }else{
+     this.setState({
+      selectedDate: date,
+      quantityDisplay: true
+     })
+   }
+      
+  
+   
+    
     this.handleConfirmInfo('passtime', passtime)
   }
   //子(datepicker)传父获取timeslotId 同時也接收子組件傳來的時分秒
@@ -235,41 +259,12 @@ class App extends Component {
   }
 
   render() {
-    let that = this;
-    let selectIdPackage;
-    let dealitemTypes;
-    // let quantityDisplay;
-    let selectIdPackageDateLength; //通过判断date.length判断日期的显示
-    // let selectIdPackageDateLengthTwo; //通过判断date.length判断日期的显示
     let promotionList = [];
     //判断quantity显现
     if(this.state.timeslotId){ 
       this.state.quantityDisplay = true;
       this.state.timeslotId = false;  //防止再点击package的时候显示quantity
     }
-    // console.log(this.state.timeslotId);
-    //父组件传select quantity子组件 dealitemTypes属性；
-    // if(this.state.packages !== undefined){  
-    //    selectIdPackage = this.state.packages.find(function(ele){
-    //     return ele.id === that.state.packageid;
-    //   })
-    //   if(selectIdPackage !== undefined){
-    //     if(selectIdPackage.dates.length>0){
-    //       selectIdPackageDateLength = selectIdPackage.dates.length;
-    //       this.state.selectIdPackageDateLengthTwo = selectIdPackage.dates.length;      
-    //       for(let i =0; i<selectIdPackage.dates.length; i++){
-    //         if(this.state.selectedDate === selectIdPackage.dates[i].date.substring(8,10)){
-    //           dealitemTypes = selectIdPackage.dates[i].dealItemTypes;
-    //         }
-    //       }
-    //     }else{
-    //       selectIdPackageDateLength = 0;
-    //       this.state.selectIdPackageDateLengthTwo = 0;
-    //       dealitemTypes = selectIdPackage.dealItemTypes;
-    //     }  
-    //   }     
-    // }
-
     this.selectPackage();
     
     if(this.state.promotionList !== undefined){
@@ -282,7 +277,7 @@ class App extends Component {
         <PackageRadio packages={this.state.packages} getPackageInfo={this.handleConfirmInfo} onChangeAllFlag={this.changeAllFlag} belowFlagOne={this.state.nextstate} belowFlagTwo={this.state.afterFirstConfirm} selectIdPackageDateLengthTwo={this.state.selectIdPackageDateLengthTwo} quantityDisplay={this.state.quantityDisplay}/>
         {/* <SelectTime /> */}
         {this.state.selectIdPackageDateLength>0 && <DatePicker packages={this.state.selectIdPackage} onChangeHandledates={this.handleSelectedDate} onChangeTimeslotId={this.handleTimeslotId} onHandleBelowFlag={this.handleBelowFlag} belowFlagOne={this.state.nextstate} belowFlagTwo={this.state.afterFirstConfirm}/>}      
-        {(this.state.quantityDisplay || (this.state.selectIdPackageDateLengthTwo ==0 && this.state.controlQuantity)) && <Quantity confirmInfo={this.state.confirmInfo} dealitemTypes={this.state.dealitemTypes} timeslotId={this.state.timeslotId} handlepeopleandPrice={this.peopleandPrice} onHandleBelowFlag={this.handleBelowFlag} belowFlagOne={this.state.nextstate} belowFlagTwo={this.state.afterFirstConfirm}/>}
+        {(this.state.quantityDisplay || (this.state.selectIdPackageDateLengthTwo ==0 && this.state.controlQuantity)) && <Quantity packages={this.state.selectIdPackage} confirmInfo={this.state.confirmInfo} dealitemTypes={this.state.dealitemTypes} timeslotId={this.state.timeslotId} handlepeopleandPrice={this.peopleandPrice} onHandleBelowFlag={this.handleBelowFlag} belowFlagOne={this.state.nextstate} belowFlagTwo={this.state.afterFirstConfirm}/>}
         {this.state.nextstate && <Userdetails getUserInfo={this.handleConfirmInfo}/>}
         {this.state.nextstate && this.state.questions &&
           <QuestionList

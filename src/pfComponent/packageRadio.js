@@ -109,7 +109,7 @@ class PackageRadio extends React.Component {
                         {packageList.map((number) => (
                             <FormControlLabel
                                 key={number.id}
-                                value={number.title}
+                                value={number.id}
                                 control={<Radio id={number.id} onChange={this.radioChange.bind(this, number.displayPrice)} className='packageRadio' color="primary" />}                               
                                 label={<div className='packageRadioLabel'>
                                     <div className='packageRadioLabelHead'>{number.title}</div>

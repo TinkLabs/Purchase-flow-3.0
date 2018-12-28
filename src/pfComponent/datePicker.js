@@ -20,22 +20,35 @@ class Calendar extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.state = {
             currentIndex: null,
-            preferedSodates: props.preferedDates
+            preferedSodates: props.preferedDates,
+            packageidanother: []
         };
     }
     
+   
     //切换package
     componentWillReceiveProps(nextProps){
         this.setState({
             preferedSodates: nextProps.preferedDates
-        })
+        });
+        //根据两次选择的packageid 不一样 来使date初始化  而 date 一下组件交互时date保持原样
+       let tmppackageidanother = this.state.packageidanother;
+       tmppackageidanother.unshift(nextProps.packageid);
+       this.setState({packageidanother: tmppackageidanother});
+       if(tmppackageidanother.length>=2){
+            if(tmppackageidanother[0] != tmppackageidanother[1]){
+                this.setState({currentIndex: null})
+            }
+       }
     }
     handleClick(event) {
+        console.log(event.currentTarget.getAttribute('prefereddatevalue'));
         if(event.currentTarget.getAttribute('prefereddatevalue') === '1'){
             this.setState({
                 currentIndex: parseInt(event.currentTarget.getAttribute('index')),
             },function(){
-                this.state.currentIndex = null;
+                
+                // this.state.currentIndex = null; //切换package时 date的样式清零
             });
             this.props.onHandleDate(event.currentTarget.getAttribute('value'));
             
@@ -124,10 +137,12 @@ class DatePicker extends React.Component {
         let pickDate = this.state.selectDate;
         let timeslotTittle = [];
         let preferedDate = [];
+        let packageId;
         if(this.props.packages != undefined){
-            console.log(this.props.packages.dates);
+            console.log(typeof(this.props.packages.id));
+            packageId = Number(this.props.packages.id);
             for(let i = 0; i<this.props.packages.dates.length; i++){
-                preferedDate[i] = this.props.packages.dates[i].date.substring(8,10); //没有传来的date禁止
+                preferedDate[i] = this.props.packages.dates[i].date.substring(8,10); //没有传来的date dimed禁止
                 if(pickDate == this.props.packages.dates[i].date.substring(8,10)){         
                     timeslotTittle = this.props.packages.dates[i].timeslots;                   
                 }
@@ -150,7 +165,7 @@ class DatePicker extends React.Component {
                     <div className='datePickerHead'>{Month[month]} {year}</div>
                     <div className="calendar">
                         <ul className="list">
-                            <Calendar  onHandleDate={this.handleDate} onHandleDownFlag={this.handleDownFlag} belowFlagOne={this.state.nextstate} belowFlagTwo={this.state.afterFirstConfirm} preferedDates={preferedDate}/>
+                            <Calendar packageid={packageId}  onHandleDate={this.handleDate} onHandleDownFlag={this.handleDownFlag} belowFlagOne={this.state.nextstate} belowFlagTwo={this.state.afterFirstConfirm} preferedDates={preferedDate}/>
                         </ul>
                     </div>
                 </div>
