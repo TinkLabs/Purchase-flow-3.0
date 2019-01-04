@@ -15,7 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import ErrorIcon from '@material-ui/icons/ErrorOutline';
 import Slide from '@material-ui/core/Slide';
 
-// import ConfirmationTotal from './confirmationTotal'
+import { FormattedMessage } from 'react-intl';
 
 const styles = theme => ({
     root: {
@@ -130,7 +130,12 @@ const styles = theme => ({
   
       return (
         <div className={classes.root} style={{maxWidth:'100%'}}>
-        <div className='sectionHeader'>YOUR BOOKING ORDER</div>
+          <div className='sectionHeader'>
+            <FormattedMessage
+                id='bookingorder'
+                defaultMessage='YOUR BOOKING ORDER'
+            />     
+          </div>
           <List component="nav">
             <div className='confirmName'>
               {this.props.confirmInfo.userInfo.firstName} {this.props.confirmInfo.userInfo.lastName}
@@ -146,7 +151,12 @@ const styles = theme => ({
               ))
             }
             <Divider style={{marginTop: 10}}/>
-            <div className='confirmationPackage'>Package</div>
+            <div className='confirmationPackage'>
+              <FormattedMessage
+                  id='package'
+                  defaultMessage='Package'
+              />            
+            </div>
             <div className='confirmationPackageList'>
               {this.props.confirmInfo.priceInfo.map(item => (
                 <div key={item.title}>
@@ -163,7 +173,13 @@ const styles = theme => ({
           <Divider />
           <List component="nav">
             <div className='confirmationTotalHeader'>
-              <span>TOTAL</span><span className='confirmationTotalHeaderRight'>{currency} {actualPayment}</span>
+              <span>
+                <FormattedMessage
+                    id='total'
+                    defaultMessage='TOTAL'
+                />               
+              </span>
+              <span className='confirmationTotalHeaderRight'>{currency} {actualPayment}</span>
             </div>
             {this.props.confirmInfo.isRender && [0].map(value => (
               <ListItem key={value} role={undefined} dense button onClick={this.handleToggle(value)}>
@@ -174,7 +190,10 @@ const styles = theme => ({
                 />
                 <ListItemText
                   style={{padding: '0 0', fontSize: '14px'}}
-                  primary={`handy may use my email to send communications.(You may opt out at anytime)`} 
+                  primary={<FormattedMessage
+                            id='checkboxoptone'
+                            defaultMessage='handy may use my email to send communications.(You may opt out at anytime'
+                          />} 
                 />
                
               </ListItem>
@@ -188,7 +207,10 @@ const styles = theme => ({
                     disableRipple
                   />
                   <ListItemText
-                    primary={`I agree to Terms and Conditions`}
+                    primary={<FormattedMessage
+                              id='checkboxopttwo'
+                              defaultMessage='I agree to Terms and Conditions'
+                            />}
                     style={{padding: '0 0', fontSize: '14px'}}
                   />
                   <span style={{display: 'inline-block', width: '80px'}}><ErrorIcon onClick={this.handleClickOpen} style={{color: "#ff8400"}} /></span>
@@ -202,10 +224,18 @@ const styles = theme => ({
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            <DialogTitle id="alert-dialog-title" style={{fontSize: '16px'}}>{"Terms and Conditions"}</DialogTitle>
+            <DialogTitle id="alert-dialog-title" style={{fontSize: '16px'}}>
+              <FormattedMessage
+                id='tandc'
+                defaultMessage='Terms and Conditions'
+              />
+            </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description" style={{color: '#000'}}>
-                this is Terms and Conditions
+                <FormattedMessage
+                  id='thisistandc'
+                  defaultMessage='this is Terms and Conditions'
+                />               
               </DialogContentText>
             </DialogContent>
             <DialogActions>

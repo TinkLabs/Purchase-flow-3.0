@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+import { FormattedMessage, FormattedDate } from 'react-intl';
+
 const styles = theme => ({
     button: {
         margin: theme.spacing.unit,
@@ -160,7 +162,14 @@ class DatePicker extends React.Component {
         let that = this;
         return (          
             <div id="datepicker">
-                <div className='sectionHeader'>SELECT DATE Today is {week[day]},{date} {Month[month]} {year}</div>
+                {/* <div className='sectionHeader'>SELECT DATE Today is {week[day]},{date} {Month[month]} {year}</div> */}
+                <div className='sectionHeader'>
+                    <FormattedMessage
+                        id='selectdate'
+                        defaultMessage='SELECT DATE Today is'
+                    />
+                    <FormattedDate value={new Date()}/>
+                </div>
                 <div className="overflow">
                     <div className='datePickerHead'>{Month[month]} {year}</div>
                     <div className="calendar">
@@ -169,7 +178,12 @@ class DatePicker extends React.Component {
                         </ul>
                     </div>
                 </div>
-                {timeslotTittle.length>0 && <div className='sectionHeader'>SELECT TIME</div>}
+                {timeslotTittle.length>0 && <div className='sectionHeader'>
+                <FormattedMessage
+                    id='selecttime'
+                    defaultMessage='SELECT TIME'
+                />
+                </div>}
                 {timeslotTittle.length>0 && 
                     <div style={{width:'100%', overflow:'hidden', height: 50}}>
                         <div style={{width:'100%',height: 58, overflowX:'auto'}}>

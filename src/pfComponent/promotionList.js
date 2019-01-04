@@ -9,6 +9,8 @@ import ErrorIcon from '@material-ui/icons/ErrorOutline';
 
 import '../App.css';
 
+import { FormattedMessage } from 'react-intl';
+
 class Promotionlist extends React.Component {
   constructor(props) {
     super(props);
@@ -129,7 +131,15 @@ class Promotionlist extends React.Component {
           return (
             <div style={{ overflow: 'hidden' }} key={index}>
               <Button style={{ color: '#ff8400' }} onClick={that.handleClickOpen.bind(this, ele.title, ele.message)}><ErrorIcon style={{color: "#ff8400",fontSize:'20px'}} />{ele.title}</Button>
-              <Button style={{ color: (that.state.applyDim[index] ? '#d8d8d8':'#ff8400'), float: 'right' }} disabled={that.state.applyDim[index]? true:false} onClick={that.handleApplyorNot.bind(this, index)}>{that.state.usediscountedPrice[index] ? 'REMOVE' : 'APPLY'}</Button>
+              <Button style={{ color: (that.state.applyDim[index] ? '#d8d8d8':'#ff8400'), float: 'right' }} disabled={that.state.applyDim[index]? true:false} onClick={that.handleApplyorNot.bind(this, index)}>{that.state.usediscountedPrice[index] ? 
+                    <FormattedMessage
+                        id='remove'
+                        defaultMessage='REMOVE'
+                    /> : <FormattedMessage
+                        id='apply'
+                        defaultMessage='APPLY'
+                    />}
+              </Button>
             </div>
           );
         })}

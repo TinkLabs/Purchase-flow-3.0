@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid';
 
 import '../App.css';
 
+import { FormattedMessage } from 'react-intl';
+
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -277,7 +279,12 @@ class Quantity extends Component {
      
         return (
             <div className={classes.root}>
-                <div className='sectionHeader'>SELECT QUANTITY</div>
+                <div className='sectionHeader'>
+                    <FormattedMessage
+                        id='selectquantity'
+                        defaultMessage='SELECT QUANTITY'
+                    />
+                </div>
                 {this.state.dealitemTypes.map(function (ele, index) {
                     return (
                         <Grid container spacing={24} key={index}>

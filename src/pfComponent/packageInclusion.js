@@ -6,6 +6,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import { FormattedMessage } from 'react-intl';
+
 class AlertDialog extends React.Component {
   state = {
     open: false,
@@ -24,7 +26,12 @@ class AlertDialog extends React.Component {
       let description = this.props.description;
     return (
       <div>
-        <Button style={{padding: 0,minHeight:'100%',textTransform:'none', color:'grey'}} onClick={this.handleClickOpen}>What's Included?</Button>
+        <Button style={{padding: 0,minHeight:'100%',textTransform:'none', color:'grey'}} onClick={this.handleClickOpen}>
+          <FormattedMessage
+              id='whatinclude'
+              defaultMessage='Whats Included?'
+          />         
+        </Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}

@@ -4,6 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import '../App.css';
 
+import { FormattedMessage } from 'react-intl';
+
 const styles = theme => ({
     container: {
         display: 'flex',
@@ -79,7 +81,12 @@ class Userdetails extends Component {
         let value3 = this.state.value3;
         return (
             <div className={classes.container}>
-            <div className='sectionHeader' style={detailWidth}>YOUR DETAILS</div>
+            <div className='sectionHeader' style={detailWidth}>
+                <FormattedMessage
+                    id='userdetail'
+                    defaultMessage='YOUR DETAILS'
+                />
+            </div>
             <Input
                 placeholder="Passport First Name"
                 className={classes.input}               
