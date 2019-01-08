@@ -84,7 +84,7 @@ class BottomButton extends React.Component{
                         delete this.confirmBodyPar[key]
                     }
                 })
-                this.iLink = `dealpaymentoptions:${JSON.stringify(this.confirmBodyPar)}`
+                this.iLink = `dealpaymentoptions:${JSON.stringify(this.confirmBodyPar)}`.replace(/\+/g,'%2B')
                 this.state.userInf.checkedInfo = undefined; //防止将上面的点击apply remove时的buttontext覆盖；
             }else{
                 this.setState({bottonButtonText : 'CONFIRM',sum: 0}); 

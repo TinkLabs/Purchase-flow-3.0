@@ -110,7 +110,7 @@ class DatePicker extends React.Component {
         var dateBuynow = this.props.packages.dates.filter(function(ele){
             return date === ele.date.substring(8,10);
         });
-        passtime['dateBuynow'] = dateBuynow[0].date.replace(/\+/g,'%2B');
+        passtime['dateBuynow'] = dateBuynow[0].date;
         passtime['date'] = date;
         passtime['year'] = new Date().getFullYear();
         passtime['month'] = new Date().getMonth() + 1;
