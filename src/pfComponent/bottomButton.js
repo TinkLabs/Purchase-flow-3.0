@@ -153,7 +153,8 @@ class BottomButton extends React.Component{
                         const chooseMonth = monthDict.filter(item => {
                             return item.value === this.props.verifyUserInf.passtime.month
                         })
-                        this.chooseDate = `${chooseMonth[0].label} ${this.props.verifyUserInf.passtime.date}, ${this.props.verifyUserInf.passtime.year} 00:00:00`
+                        // this.chooseDate = `${chooseMonth[0].label} ${this.props.verifyUserInf.passtime.date}, ${this.props.verifyUserInf.passtime.year} 00:00:00`
+                        this.chooseDate = this.props.verifyUserInf.passtime.dateBuynow;
                     }
                     this.confirmBodyPar = {
                         "answers": this.props.verifyUserInf.answers || {},

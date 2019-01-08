@@ -107,6 +107,10 @@ class DatePicker extends React.Component {
     handleDate(date){
         //傳所有時間到父組件
         const passtime = this.state.passTime;
+        var dateBuynow = this.props.packages.dates.filter(function(ele){
+            return date === ele.date.substring(8,10);
+        });
+        passtime['dateBuynow'] = dateBuynow[0].date;
         passtime['date'] = date;
         passtime['year'] = new Date().getFullYear();
         passtime['month'] = new Date().getMonth() + 1;
