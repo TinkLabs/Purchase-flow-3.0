@@ -124,7 +124,11 @@ const styles = theme => ({
       })
       let discountPrice = 0
       if (this.props.confirmInfo.promotionItem !== undefined) {
-        discountPrice = (totalPrice * this.props.confirmInfo.promotionItem.ratio / 100).toFixed(2)
+        if(this.props.confirmInfo.promotionItem.type == "percentage"){
+          discountPrice = (totalPrice * this.props.confirmInfo.promotionItem.ratio / 100).toFixed(2)
+        }else{
+          discountPrice = this.props.confirmInfo.promotionItem.ratio;
+        }     
       }
       const actualPayment = (totalPrice - discountPrice).toFixed(2)
   

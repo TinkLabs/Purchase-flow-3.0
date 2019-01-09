@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import '../App.css';
 
@@ -43,7 +44,10 @@ class Quantity extends Component {
                            price: [],
                            title: [],
                            id: []
-                       }                
+                       },
+                       open: false,
+                       vertical: 'bottom',
+                       horizontal: 'center'               
                     };
         this.addQuantity = this.addQuantity.bind(this);
         this.minusQuantity = this.minusQuantity.bind(this);
@@ -224,20 +228,46 @@ class Quantity extends Component {
         }
         
     }
-    addQuantity(currentQuantity,index,e){
+
+    handleClick(){
+        this.setState({ 
+            open: true
+        });
+      };
+    handleClose = () => {
+    this.setState({ open: false });
+    };
+    addQuantity(currentQuantity,index,totalquantity,e){
+        console.log(totalquantity);
+        var totalnum = 0;
+        // for(let i = 0; i<totalquantity.length; i++){
+        //     totalnum += totalquantity[i];
+        // }
+        function getSum(total, num) {
+            return total +num;
+        }
+        totalnum = totalquantity.reduce(getSum,0);
+        console.log(totalnum);
         // console.log(e.currentTarget.getAttribute('currentdiscountprice')); //这里要用e获取当前的折扣价。
         this.getMeetConditionPricesByAdd(currentQuantity,index,e.currentTarget.getAttribute('currentdiscountprice'));
         console.log(this.state.meetConditionPrices);
         console.log(this.state.unitPrice[index]);
         this.displayDiscountedpriceReminder(currentQuantity+2,index,this.state.afterAddDiscount[index]);
         //数量加一操作
-        if(currentQuantity < this.state.maxQuantity[index]){
-            let temp2 = {...this.state.quantity, [index]:currentQuantity+1};
+        if(totalnum < this.state.maxQuantity[index]){
+            // let temp2 = {...this.state.quantity, [index]:currentQuantity+1};
+            let temp2 = this.state.quantity;
+            temp2[index] = currentQuantity+1;
             this.setState({quantity: temp2}, function(){
                 this.state.peopleandPrice.number[index] = this.state.quantity[index]; //加操作后的新的票数存储起来传给父组件
             });          
             console.log(this.state.peopleandPrice);
         }else{
+            this.handleClick();
+            //3.5s后warnmessage消失
+            setTimeout(() => {
+                this.handleClose();
+            }, 3500);
             return false;
         }
         this.props.handlepeopleandPrice(this.state.peopleandPrice); //子传父传peopleandprice
@@ -273,7 +303,8 @@ class Quantity extends Component {
     //覆盖旧的折扣价 unitprice
    
     render() {  
-        const { classes } = this.props;        
+        const { classes } = this.props; 
+        const { vertical, horizontal, open } = this.state;       
         let that = this;
         const currency = this.props.confirmInfo.packageInfo.currency
      
@@ -287,6 +318,7 @@ class Quantity extends Component {
                 </div>
                 {this.state.dealitemTypes.map(function (ele, index) {
                     return (
+                        <div>
                         <Grid container spacing={24} key={index}>
                             <Grid item xs={8}>
                                 <div className={classes.paper} style={{height:'80px'}}>
@@ -303,15 +335,27 @@ class Quantity extends Component {
                                 <div id='quantityRight' className={classes.paper}>
                                     <span className='quantityNo'>{that.state.quantity[index]}</span>
                                     <div className='quantityjiajian'>
-                                    <span className='sumbmitStyle' currentdiscountprice={that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]} onClick={that.minusQuantity.bind(this,that.state.quantity[index],index)}>-</span>
-                                    <span className='addStyle' currentdiscountprice={that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]} onClick={that.addQuantity.bind(this,that.state.quantity[index],index)}>+</span>                
+                                        <span className='sumbmitStyle' currentdiscountprice={that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]} onClick={that.minusQuantity.bind(this,that.state.quantity[index],index)}>-</span>
+                                        <span className='addStyle' currentdiscountprice={that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]} onClick={that.addQuantity.bind(this,that.state.quantity[index],index,that.state.quantity)}>+</span>                
                                     </div>
                                 </div>
                             </Grid>
                         </Grid>
+                        <Snackbar
+                        style={{marginBottom: '52px'}}
+                        anchorOrigin={{ vertical, horizontal }}
+                        open={open}
+                        onClose={that.handleClose}
+                        ContentProps={{
+                            'aria-describedby': 'message-id',
+                        }}
+                        message={<span id="message-id">Sorry,maximum quantity is{that.state.maxQuantity[index]}.Please purchase separately</span>}
+                        />
+                        </div>
                     );
+                    
                 })}
-
+               
             </div>
         );
     }

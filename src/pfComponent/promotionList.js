@@ -98,6 +98,7 @@ class Promotionlist extends React.Component {
       this.promotionItem.title = this.state.promotionList[index].title;
       this.promotionItem.value = this.state.promotionList[index].value;
       this.promotionItem.ratio = this.promotionItem.value;
+      this.promotionItem.type = this.state.promotionList[index].type;
     }
   }
   handleApplyorNot(index, e) {
