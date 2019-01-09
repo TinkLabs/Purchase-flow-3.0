@@ -138,13 +138,14 @@ class PackageRadio extends React.Component {
                                         {number.showExtral || number.showMinimumExtral ?
                                             (number.showExtral && number.showMinimumExtral ?
                                                 <div className='extraDiscount'>
-                                                    <FormattedMessage
+                                                    {/* <FormattedMessage
                                                         id='minimumpax'
                                                         defaultMessage='You must select {minimumpax} or more for this package'                                               
                                                         values={{
                                                             minimumpax: number.minimumPax
                                                         }}
-                                                    />
+                                                    /> */}
+                                                    You must select {number.minimumPax} or more for this package
                                                 </div> :
                                                 <div className='extraDiscount'>
                                                     <FormattedMessage
