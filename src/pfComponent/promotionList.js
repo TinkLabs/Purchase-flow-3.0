@@ -68,7 +68,6 @@ class Promotionlist extends React.Component {
                 this.setState({
                   applyDim: tmpapplyDim
                 })
-                // this.state.applyDim[j] = true;
               }
             }
           }
@@ -85,6 +84,7 @@ class Promotionlist extends React.Component {
         usediscountedPrice: temp
       });
       this.state.promotionTitle = '';  //改状态下传空值
+      this.promotionItem = undefined; //不打折时 传外一个undefined  不渲染comfirmation组件减去多少折扣
     } else {
       for (let j = 0; j < this.state.promotionList.length; j++) {
         this.state.usediscountedPrice[j] = false;
@@ -93,6 +93,7 @@ class Promotionlist extends React.Component {
       this.setState({
         usediscountedPrice: temp
       });
+      this.promotionItem = {};
       this.state.promotionTitle = this.state.promotionList[index].title;
       this.promotionItem.id = this.state.promotionList[index].id;
       this.promotionItem.title = this.state.promotionList[index].title;
@@ -101,25 +102,32 @@ class Promotionlist extends React.Component {
       this.promotionItem.type = this.state.promotionList[index].type;
     }
   }
-  handleApplyorNot(index, e) {
-    if (!this.state.promotionList[index].conditions) {
-      this.useApplyOnce(index);
+  // handleApplyorNot(index, e) {
+  //   if (!this.state.promotionList[index].conditions) {
+  //     this.useApplyOnce(index);
+  //     this.props.onHandlePromotionTitle('promotionItem', this.promotionItem);
+  //      //点击apply remove时 通过判断confirmation 是否为true 来隐藏它
+  //      if(this.props.confirmAppear){
+  //       this.props.onHandleConfirmAppear('buttonText',false);
+  //     }
+  //   } else {
+  //     if (this.state.totalNo > this.state.promotionList[index].conditions.price_total.minimum) {
+  //       this.useApplyOnce(index);
+  //       this.props.onHandlePromotionTitle('promotionItem', this.promotionItem);
+  //       //点击apply remove时 通过判断confirmation 是否为true 来隐藏它
+  //       if(this.props.confirmAppear){
+  //         this.props.onHandleConfirmAppear('buttonText',false);
+  //       }
+  //     }
+  //   }
+  // }
+  handleApplyorNot(index, e){
+    this.useApplyOnce(index);
       this.props.onHandlePromotionTitle('promotionItem', this.promotionItem);
        //点击apply remove时 通过判断confirmation 是否为true 来隐藏它
        if(this.props.confirmAppear){
         this.props.onHandleConfirmAppear('buttonText',false);
       }
-    } else {
-      if (this.state.totalNo > this.state.promotionList[index].conditions.price_total.minimum) {
-        this.useApplyOnce(index);
-        this.props.onHandlePromotionTitle('promotionItem', this.promotionItem);
-        //点击apply remove时 通过判断confirmation 是否为true 来隐藏它
-        if(this.props.confirmAppear){
-          this.props.onHandleConfirmAppear('buttonText',false);
-        }
-      }
-    }
-
   }
 
   render() {
