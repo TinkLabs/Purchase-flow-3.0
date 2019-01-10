@@ -240,13 +240,13 @@ class Quantity extends Component {
     addQuantity(currentQuantity,index,totalquantity,e){
         console.log(totalquantity);
         var totalnum = 0;
-        // for(let i = 0; i<totalquantity.length; i++){
-        //     totalnum += totalquantity[i];
-        // }
-        function getSum(total, num) {
-            return total +num;
+        for(let i = 0; i<totalquantity.length; i++){
+            totalnum += totalquantity[i];
         }
-        totalnum = totalquantity.reduce(getSum,0);
+        // function getSum(total, num) {
+        //     return total +num;
+        // }
+        // totalnum = totalquantity.reduce(getSum,0);
         console.log(totalnum);
         // console.log(e.currentTarget.getAttribute('currentdiscountprice')); //这里要用e获取当前的折扣价。
         this.getMeetConditionPricesByAdd(currentQuantity,index,e.currentTarget.getAttribute('currentdiscountprice'));
