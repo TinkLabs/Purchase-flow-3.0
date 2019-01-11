@@ -270,7 +270,7 @@ class App extends Component {
         })
       }
       //需要在这里判断是否要将打折信息传到comfirmation 组件单中 当然这里仅适用于一个promotions情况
-      if(this.state.promotionList){
+      if(this.state.promotionList.length !=0){
         this.promotionItem = {
           id: this.state.promotionList[0].id,
           title: this.state.promotionList[0].title,
