@@ -128,7 +128,6 @@ class App extends Component {
     //     })
     //   }
     //   )
-
     this.getDealStepInfo();
   }
 
@@ -255,17 +254,35 @@ class App extends Component {
 
   //接收子传父的peopleandprice
   peopleandPrice(pp) {
-    // this.state.peopleandPrice = pp;
+    this.promotionItem = {
+      id: this.state.promotionList[0].id,
+      title: this.state.promotionList[0].title,
+      ratio: this.state.promotionList[0].value,
+      type: this.state.promotionList[0].type
+    }
+
     this.setState({ peopleandPrice: pp, quantityContral: pp.number });
     let peopleAndPrice = []
+    let totalprice = 0;
     setTimeout(() => {
       for (let i = 0; i < pp.number.length; i++) {
+        totalprice += pp.number[i] * pp.price[i];
         peopleAndPrice.push({
           title: pp.title[i],
           price: pp.price[i],
           count: pp.number[i],
           id: pp.id[i],
         })
+      }
+      //需要在这里判断是否要将打折信息传到comfirmation 组件单中 当然这里仅适用于一个promotions情况
+      if (this.state.promotionList[0].conditions) {
+        console.log(this.state.promotionList);
+        console.log(totalprice)
+        if (totalprice > this.state.promotionList[0].conditions.price_total.minimum) {
+          this.handleConfirmInfo('promotionItem', this.promotionItem);
+        }
+      } else {
+        this.handleConfirmInfo('promotionItem', this.promotionItem);
       }
       this.handleConfirmInfo('priceInfo', peopleAndPrice)
     }, 0)

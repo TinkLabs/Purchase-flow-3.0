@@ -21,7 +21,7 @@ class Promotionlist extends React.Component {
       title: '',
       message: '',
       peopleandprice: {},
-      usediscountedPrice: [],
+      usediscountedPrice: [true,true],
       totalNo: 0,
       promotionTitle: '',
       applyDim: []
@@ -29,7 +29,6 @@ class Promotionlist extends React.Component {
     this.handleApplyorNot = this.handleApplyorNot.bind(this);
     this.promotionItem = {}
   }
-
 
   handleClickOpen = (title, message, e) => {
     this.setState({
@@ -52,9 +51,9 @@ class Promotionlist extends React.Component {
   
           for (let i = 0; i < this.state.peopleandprice.number.length; i++) {
             //通过判断applyandRemove 第一次点confirm时 保留apply confirm 状态
-            if(nextProps.applyandRemove != false){
-              this.state.usediscountedPrice[i] = false;           
-            }        
+            // if(nextProps.applyandRemove != false){
+            //   this.state.usediscountedPrice[i] = false;           
+            // }        
             totalnum += this.state.peopleandprice.number[i] * this.state.peopleandprice.price[i];
           }
 
@@ -64,9 +63,12 @@ class Promotionlist extends React.Component {
               //总价小于条件最小值禁止按apply按钮
               if(totalnum < nextProps.promotionList[j].conditions.price_total.minimum){
                 let tmpapplyDim = this.state.applyDim;
+                let tmpusediscountedPrice = this.state.usediscountedPrice;  //灰暗的文字要是apply
+                tmpusediscountedPrice[j] = false;
                 tmpapplyDim[j] = true;
                 this.setState({
-                  applyDim: tmpapplyDim
+                  applyDim: tmpapplyDim,
+                  usediscountedPrice: tmpusediscountedPrice
                 })
               }
             }
@@ -129,6 +131,7 @@ class Promotionlist extends React.Component {
         this.props.onHandleConfirmAppear('buttonText',false);
       }
   }
+
 
   render() {
     console.log(this.state.peopleandprice);
