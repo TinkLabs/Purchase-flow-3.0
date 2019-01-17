@@ -284,7 +284,8 @@ class Quantity extends Component {
              
         //数量减一操作
         if(currentQuantity > this.state.minQuantity[index]){
-            let temp3 = {...this.state.quantity, [index]:currentQuantity-1};
+            let temp3 = this.state.quantity;
+            temp3[index] = currentQuantity-1;
             this.setState({quantity: temp3}, function(){
                 this.state.peopleandPrice.number[index] = this.state.quantity[index]; //减操作后的新的票数存储起来传给父组件
             });
