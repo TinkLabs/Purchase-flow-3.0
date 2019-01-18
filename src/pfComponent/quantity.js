@@ -34,6 +34,7 @@ class Quantity extends Component {
                        transferTimaslotId: this.props.timeslotId,
                        dealItemPrice: [], //初始default:true的price 不要写成对象形式
                        maxQuantity: [], //数量最大值
+                       viewQuantity: 0, //提示最大数量
                        minQuantity: [], //数量最小值
                        isdiscountReminderDisplay: [],
                        numbermore: [],
@@ -229,9 +230,11 @@ class Quantity extends Component {
         
     }
 
-    handleClick(){
+    handleClick(msg){
+       
         this.setState({ 
-            open: true
+            open: true,
+            viewQuantity: msg
         });
       };
     handleClose = () => {
@@ -239,37 +242,71 @@ class Quantity extends Component {
     };
     addQuantity(currentQuantity,index,totalquantity,e){
         console.log(totalquantity);
+        console.log(this.state.maxQuantity[index]);
         var totalnum = 0;
         for(let i = 0; i<totalquantity.length; i++){
             totalnum += totalquantity[i];
         }
-        // function getSum(total, num) {
-        //     return total +num;
-        // }
-        // totalnum = totalquantity.reduce(getSum,0);
         console.log(totalnum);
         // console.log(e.currentTarget.getAttribute('currentdiscountprice')); //这里要用e获取当前的折扣价。
         this.getMeetConditionPricesByAdd(currentQuantity,index,e.currentTarget.getAttribute('currentdiscountprice'));
         console.log(this.state.meetConditionPrices);
         console.log(this.state.unitPrice[index]);
         this.displayDiscountedpriceReminder(currentQuantity+2,index,this.state.afterAddDiscount[index]);
-        //数量加一操作
-        if(totalnum < this.state.maxQuantity[index]){
-            // let temp2 = {...this.state.quantity, [index]:currentQuantity+1};
-            let temp2 = this.state.quantity;
-            temp2[index] = currentQuantity+1;
-            this.setState({quantity: temp2}, function(){
-                this.state.peopleandPrice.number[index] = this.state.quantity[index]; //加操作后的新的票数存储起来传给父组件
-            });          
-            console.log(this.state.peopleandPrice);
+        //数量加一操作 考虑的情况有点多
+        if(this.state.dealitemTypes[index].maxQuantity === -1){
+            if(totalnum < this.state.maxQuantity[index]){
+                let temp2 = this.state.quantity;
+                temp2[index] = currentQuantity+1;
+                this.setState({quantity: temp2}, function(){
+                    this.state.peopleandPrice.number[index] = this.state.quantity[index]; //加操作后的新的票数存储起来传给父组件
+                });          
+                console.log(this.state.peopleandPrice);
+            }else{
+                this.handleClick(this.state.maxQuantity[index]);
+                //3.5s后warnmessage消失
+                setTimeout(() => {
+                    this.handleClose();
+                }, 3500);
+                return false;
+            }
         }else{
-            this.handleClick();
-            //3.5s后warnmessage消失
-            setTimeout(() => {
-                this.handleClose();
-            }, 3500);
-            return false;
+            if(this.state.dealitemTypes[index].maxQuantity > this.props.packages.maximumPax){
+                if(totalnum < this.state.maxQuantity[index]){
+                    let temp2 = this.state.quantity;
+                    temp2[index] = currentQuantity+1;
+                    this.setState({quantity: temp2}, function(){
+                        this.state.peopleandPrice.number[index] = this.state.quantity[index]; //加操作后的新的票数存储起来传给父组件
+                    });          
+                    console.log(this.state.peopleandPrice);
+                }else{
+                    this.handleClick(this.state.maxQuantity[index]);
+                    //3.5s后warnmessage消失
+                    setTimeout(() => {
+                        this.handleClose();
+                    }, 3500);
+                    return false;
+                }
+            }else{
+                if(currentQuantity < this.state.maxQuantity[index]){
+                    let temp2 = this.state.quantity;
+                    temp2[index] = currentQuantity+1;
+                    this.setState({quantity: temp2}, function(){
+                        this.state.peopleandPrice.number[index] = this.state.quantity[index]; //加操作后的新的票数存储起来传给父组件
+                    });          
+                    console.log(this.state.peopleandPrice);
+                }else{
+                    this.handleClick(this.state.maxQuantity[index]);
+                    //3.5s后warnmessage消失
+                    setTimeout(() => {
+                        this.handleClose();
+                    }, 3500);
+                    return false;
+                }
+            }
+            
         }
+       
         this.props.handlepeopleandPrice(this.state.peopleandPrice); //子传父传peopleandprice
        //重新点击加按钮时隐藏下面所有模块
        if((this.props.belowFlagOne && this.props.belowFlagTwo) || this.props.belowFlagOne || this.props.belowFlagTwo){
@@ -308,7 +345,6 @@ class Quantity extends Component {
         const { vertical, horizontal, open } = this.state;       
         let that = this;
         const currency = this.props.confirmInfo.packageInfo.currency
-     
         return (
             <div className={classes.root}>
                 <div className='sectionHeader'>
@@ -320,38 +356,38 @@ class Quantity extends Component {
                 {this.state.dealitemTypes.map(function (ele, index) {
                     return (
                         <div>
-                        <Grid container spacing={24} key={index}>
-                            <Grid item xs={8}>
-                                <div className={classes.paper} style={{height:'80px'}}>
-                                    <div style={{ textAlign: 'left' }}>{ele.title}</div>
-                                    <div style={{ textAlign: 'left', marginTop: 5 }}>
-                                        <span className='quantityInitialPrice'>{currency} {that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]}</span>
-                                        <span className='midDelete'>{that.state.originalPrice[index] > (that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]) ? currency + that.state.originalPrice[index] : null }</span>
+                            <Grid container spacing={24} key={index}>
+                                <Grid item xs={8}>
+                                    <div className={classes.paper} style={{height:'80px'}}>
+                                        <div style={{ textAlign: 'left' }}>{ele.title}</div>
+                                        <div style={{ textAlign: 'left', marginTop: 5 }}>
+                                            <span className='quantityInitialPrice'>{currency} {that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]}</span>
+                                            <span className='midDelete'>{that.state.originalPrice[index] > (that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]) ? currency + that.state.originalPrice[index] : null }</span>
+                                        </div>
+                                        {that.state.isdiscountReminderDisplay[index] && <div style={{ textAlign: 'left' }}>Buy {that.state.numbermore[index]} more to save {currency} {that.state.morediscountprice[index]}</div>}
+                                        
                                     </div>
-                                    {that.state.isdiscountReminderDisplay[index] && <div style={{ textAlign: 'left' }}>Buy {that.state.numbermore[index]} more to save {currency} {that.state.morediscountprice[index]}</div>}
-                                    
-                                </div>
-                            </Grid>
-                            <Grid item xs={4}>
-                                <div id='quantityRight' className={classes.paper}>
-                                    <span className='quantityNo'>{that.state.quantity[index]}</span>
-                                    <div className='quantityjiajian'>
-                                        <span className='sumbmitStyle' currentdiscountprice={that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]} onClick={that.minusQuantity.bind(this,that.state.quantity[index],index)}>-</span>
-                                        <span className='addStyle' currentdiscountprice={that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]} onClick={that.addQuantity.bind(this,that.state.quantity[index],index,that.state.quantity)}>+</span>                
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <div id='quantityRight' className={classes.paper}>
+                                        <span className='quantityNo'>{that.state.quantity[index]}</span>
+                                        <div className='quantityjiajian'>
+                                            <span className='sumbmitStyle' currentdiscountprice={that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]} onClick={that.minusQuantity.bind(this,that.state.quantity[index],index)}>-</span>
+                                            <span className='addStyle' currentdiscountprice={that.state.unitPrice[index]> that.state.discountprice[index] ? that.state.discountprice[index] : that.state.unitPrice[index]} onClick={that.addQuantity.bind(this,that.state.quantity[index],index,that.state.quantity)}>+</span>                
+                                        </div>
                                     </div>
-                                </div>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                        <Snackbar
-                        style={{marginBottom: '52px'}}
-                        anchorOrigin={{ vertical, horizontal }}
-                        open={open}
-                        onClose={that.handleClose}
-                        ContentProps={{
-                            'aria-describedby': 'message-id',
-                        }}
-                        message={<span id="message-id">Sorry,maximum quantity is{that.state.maxQuantity[index]}.Please purchase separately</span>}
-                        />
+                            <Snackbar
+                            style={{marginBottom: '52px'}}
+                            anchorOrigin={{ vertical, horizontal }}
+                            open={open}
+                            onClose={that.handleClose}
+                            ContentProps={{
+                                'aria-describedby': 'message-id',
+                            }}
+                            message={<span id="message-id">Sorry,maximum quantity is {that.state.viewQuantity}.Please purchase separately</span>}
+                            />
                         </div>
                     );
                     
