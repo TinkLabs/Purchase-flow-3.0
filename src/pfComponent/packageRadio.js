@@ -15,7 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
-
+import ErrorIcon from '@material-ui/icons/ErrorOutline';
 import renderHTML from 'react-render-html';
 
 import { FormattedMessage } from 'react-intl';
@@ -123,7 +123,7 @@ class PackageRadio extends React.Component {
                                         <div className='packageRadioLabelHead'>
                                             {number.title}
                                         </div>
-                                        {number.description.length > 0 && <AlertDialog description={renderHTML(number.description)} />}
+                                        {number.description.length > 0 && <div><span style={{display: 'inline-block',verticalAlign:'middle'}}><ErrorIcon style={{color: "#ff8400"}}/></span><span style={{display: 'inline-block'}}><AlertDialog description={renderHTML(number.description)}/></span></div>}
 
                                         <div className='packageRadioLabelHeadBody'>
                                             <span>

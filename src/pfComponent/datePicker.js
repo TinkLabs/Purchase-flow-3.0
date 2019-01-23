@@ -105,6 +105,10 @@ class DatePicker extends React.Component {
         this.setState({nextstate: nextProps.belowFlagOne, afterFirstConfirm: nextProps.belowFlagTwo})
     }
     handleDate(date){
+        //点击date时 timeslot混滚初始位置。
+        if(this.state.selectDate){
+            document.getElementsByClassName('leftslot')[0].scroll(0,0);
+        }
         //傳所有時間到父組件
         const passtime = this.state.passTime;
         var dateBuynow = this.props.packages.dates.filter(function(ele){
@@ -190,8 +194,8 @@ class DatePicker extends React.Component {
                 </div>}
                 {timeslotTittle.length>0 && 
                     <div style={{width:'100%', overflow:'hidden', height: 50}}>
-                        <div style={{width:'100%',height: 58, overflowX:'auto'}}>
-                            <div style={{width:915, overflow:'hidden', height:'100%'}}>
+                        <div className='leftslot' style={{width:'100%',height: 58, overflowX:'auto'}}>
+                            <div style={{width:1100, overflow:'hidden', height:'100%'}}>
                                 {   
                                     timeslotTittle.map(function (ele, index) {
                                         return (                          
