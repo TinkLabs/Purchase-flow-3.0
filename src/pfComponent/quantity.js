@@ -89,9 +89,8 @@ class Quantity extends Component {
             //查找default=false的price
             let dealItemPriceFalse = this.state.dealitemTypes[i].prices.filter(function(ele){
                 return ele.default != true;
-            });              
+            });             
             this.state.dealItemPriceFalseArray[i] = dealItemPriceFalse;
-
             //buy more reminder的初始状态 与初始化过滤计算
             this.state.isdiscountReminderDisplay[i] = false;
             this.displayDiscountedpriceReminder(this.state.quantity[i]+1, i, this.state.unitPrice[i]);
@@ -386,7 +385,7 @@ class Quantity extends Component {
                             ContentProps={{
                                 'aria-describedby': 'message-id',
                             }}
-                            message={<span id="message-id">Sorry,maximum quantity is {that.state.viewQuantity}.Please purchase separately</span>}
+                            message={<span id="message-id">Sorry, maximum quantity is {that.state.viewQuantity}. Please purchase separately.</span>}
                             />
                         </div>
                     );

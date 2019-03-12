@@ -21,9 +21,9 @@ if (window.Global) {
   ticketInfo = JSON.parse(window.Ticketing.getTicketingProperties())
 } else {
   console.log('from web')
-  handyInfo = JSON.parse('{"service_counter":"HKG - QA ECOM","coordinate_system":"wgs84","location_accuracy":22.535,"longitude":114.1927434,"hotel_id":"5652","rom_version":"7.6.0-c70600-b6215-04514f0c8-181021224350-qa","handy_country_code":"852","device_locale":"en_US","imei":"356112071058161","status":"rented_out","handy_zone":"Hong Kong","latitude":22.2869474,"room_id":"Test005","application_id":"com.tinklabs.handy.ticketing","deploy_environment":"staging","handy_country":"Hong Kong","user_language":"English","device_user_id":"29243505","timestamp_utc":1545037964254}')
+  handyInfo = JSON.parse('{"service_counter":"HKG - QA ECOM","coordinate_system":"wgs84","location_accuracy":22.535,"longitude":114.1927434,"hotel_id":"5652","rom_version":"7.6.0-c70600-b6215-04514f0c8-181021224350-qa","handy_country_code":"852","device_locale":"en_US","imei":"355655090012297","status":"rented_out","handy_zone":"Hong Kong","latitude":22.2869474,"room_id":"Test005","application_id":"com.tinklabs.handy.ticketing","deploy_environment":"staging","handy_country":"Hong Kong","user_language":"English","device_user_id":"29243505","timestamp_utc":1545037964254}')
 
-  ticketInfo = JSON.parse('{"token":"b5b5b7c255b6981112c4c13989baed3b","version":"2.2.0"}')
+  ticketInfo = JSON.parse('{"token":"13fd9a7149917a1731ece3bd33624ab7","version":"2.2.0"}')
 }
 
 // 根据 SDK 信息生成凭证

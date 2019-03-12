@@ -93,8 +93,10 @@ class DatePicker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            passTime: {}
+            passTime: {},
+            currentindex: null
         };
+        this.currentindex = null;
         this.handleDate = this.handleDate.bind(this);
         this.handleTimaslotId = this.handleTimaslotId.bind(this);
         this.handleDownFlag = this.handleDownFlag.bind(this);
@@ -126,6 +128,7 @@ class DatePicker extends React.Component {
         
     }
     handleTimaslotId(event){
+        this.currentindex = parseInt(event.currentTarget.getAttribute('value'));
         //傳所有時間到父組件
         const passtime = this.state.passTime;
         passtime['shifenmiao'] = event.currentTarget.getAttribute('time');
@@ -199,7 +202,7 @@ class DatePicker extends React.Component {
                                 {   
                                     timeslotTittle.map(function (ele, index) {
                                         return (                          
-                                            <Button key={index} value={ele.id} time={ele.time} variant="outlined" onClick={that.handleTimaslotId} className={classes.button}>
+                                            <Button key={index} value={ele.id} time={ele.time} style={{borderColor: (that.currentindex == ele.id) ? '#ff8400':'',color: (that.currentindex == ele.id) ? '#ff8400':''}} variant="outlined" onClick={that.handleTimaslotId} className={classes.button}>
                                                 {ele.title}
                                             </Button>    
                                         )

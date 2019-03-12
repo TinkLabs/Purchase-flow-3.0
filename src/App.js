@@ -106,6 +106,7 @@ class App extends Component {
       // this.handleConfirmInfo('optIn', this.dealStepData.optIn)
       this.handleConfirmInfo('dealId', this.dealStepData.dealId)
       this.handleConfirmInfo('isRender', this.dealStepData.optIn.isRender)
+      this.handleConfirmInfo('termsAndConditions', this.dealStepData.termsAndConditionsUrl)
     } catch (e) {
       console.log(e)
     }
@@ -124,6 +125,7 @@ class App extends Component {
     //       // confirmation info 需要的数据都在 confirmInfo 对象中
     //       confirmInfo: {
     //         optIn: data.optIn,
+    //         termsAndConditions: data.termsAndConditionsUrl
     //       }
     //     })
     //   }

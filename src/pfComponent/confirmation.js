@@ -118,6 +118,7 @@ const styles = theme => ({
     render() {
       const { classes } = this.props;
       const currency = this.props.confirmInfo.packageInfo.currency
+      let termsandconditions = this.props.confirmInfo.termsAndConditions;
       let totalPrice = 0
       this.props.confirmInfo.priceInfo.forEach(item => {
         totalPrice += item.count * item.price
@@ -217,12 +218,12 @@ const styles = theme => ({
                             />}
                     style={{padding: '0 0', fontSize: '14px'}}
                   />
-                  <span style={{display: 'inline-block', width: '80px'}}><ErrorIcon onClick={this.handleClickOpen} style={{color: "#ff8400"}} /></span>
+                  <span style={{display: 'inline-block', width: '80px'}}><a href={termsandconditions}><ErrorIcon style={{color: "#ff8400"}} /></a></span>
                 </ListItem>
               </div>
             ))}
           </List>
-          <Dialog
+          {/* <Dialog
             open={this.state.open}
             onClose={this.handleClose}
             aria-labelledby="alert-dialog-title"
@@ -247,7 +248,7 @@ const styles = theme => ({
                 OK
               </Button>
             </DialogActions>
-          </Dialog>
+          </Dialog> */}
         </div>
       );
     }
