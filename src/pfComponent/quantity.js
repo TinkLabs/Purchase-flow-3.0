@@ -240,6 +240,7 @@ class Quantity extends Component {
     this.setState({ open: false });
     };
     addQuantity(currentQuantity,index,totalquantity,e){
+        this.setState({calpop: true});
         console.log(totalquantity);
         console.log(this.state.maxQuantity[index]);
         var totalnum = 0;
@@ -314,6 +315,7 @@ class Quantity extends Component {
         
     }
     minusQuantity(currentQuantity,index,e) {
+        this.setState({calpop: false});
         this.getMeetConditionPricesByMinus(currentQuantity,index,e.currentTarget.getAttribute('currentdiscountprice'));
         console.log(this.state.meetConditionPrices);
         console.log(this.state.unitPrice[index]);
@@ -327,6 +329,13 @@ class Quantity extends Component {
             });
             console.log(this.state.peopleandPrice);
         }else{
+            if(this.state.minQuantity[index] > 0){
+                this.handleClick(this.state.minQuantity[index]);
+                    //3.5s后warnmessage消失
+                    setTimeout(() => {
+                        this.handleClose();
+                    }, 3500);
+            }
             return false;
         }
         this.displayDiscountedpriceReminder(currentQuantity,index,this.state.afterAddDiscount[index]);    
@@ -385,7 +394,7 @@ class Quantity extends Component {
                             ContentProps={{
                                 'aria-describedby': 'message-id',
                             }}
-                            message={<span id="message-id">Sorry, maximum quantity is {that.state.viewQuantity}. Please purchase separately.</span>}
+                            message={<span id="message-id">{that.state.calpop?`Sorry, maximum quantity is ${that.state.viewQuantity}. Please purchase separately.`:`You must select at least ${that.state.viewQuantity} per purchase.`}</span>}
                             />
                         </div>
                     );
