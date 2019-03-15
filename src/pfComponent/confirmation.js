@@ -134,12 +134,12 @@ const styles = theme => ({
       const actualPayment = (totalPrice - discountPrice).toFixed(2)
   
       return (
-        <div className={classes.root} style={{maxWidth:'100%'}}>
+        <div className={classes.root} style={{ maxWidth: '100%' }}>
           <div className='sectionHeader'>
             <FormattedMessage
-                id='bookingorder'
-                defaultMessage='YOUR BOOKING ORDER'
-            />     
+              id='bookingorder'
+              defaultMessage='YOUR BOOKING ORDER'
+            />
           </div>
           <List component="nav">
             <div className='confirmName'>
@@ -155,12 +155,12 @@ const styles = theme => ({
                 </div>
               ))
             }
-            <Divider style={{marginTop: 10}}/>
+            <Divider style={{ marginTop: 10 }} />
             <div className='confirmationPackage'>
               <FormattedMessage
-                  id='package'
-                  defaultMessage='Package'
-              />            
+                id='package'
+                defaultMessage='Package'
+              />
             </div>
             <div className='confirmationPackageList'>
               {this.props.confirmInfo.priceInfo.map(item => (
@@ -180,9 +180,9 @@ const styles = theme => ({
             <div className='confirmationTotalHeader'>
               <span>
                 <FormattedMessage
-                    id='total'
-                    defaultMessage='TOTAL'
-                />               
+                  id='total'
+                  defaultMessage='TOTAL'
+                />
               </span>
               <span className='confirmationTotalHeaderRight'>{currency} {actualPayment}</span>
             </div>
@@ -194,13 +194,13 @@ const styles = theme => ({
                   disableRipple
                 />
                 <ListItemText
-                  style={{padding: '0 0', fontSize: '14px'}}
+                  style={{ padding: '0 0', fontSize: '14px' }}
                   primary={<FormattedMessage
-                            id='checkboxoptone'
-                            defaultMessage='handy may use my email to send communications.(You may opt out at anytime'
-                          />} 
+                    id='checkboxoptone'
+                    defaultMessage='handy may use my email to send communications.(You may opt out at anytime'
+                  />}
                 />
-               
+
               </ListItem>
             ))}
             {[1].map(value => (
@@ -213,12 +213,12 @@ const styles = theme => ({
                   />
                   <ListItemText
                     primary={<FormattedMessage
-                              id='checkboxopttwo'
-                              defaultMessage='I agree to Terms and Conditions'
-                            />}
-                    style={{padding: '0 0', fontSize: '14px'}}
+                      id='checkboxopttwo'
+                      defaultMessage='I agree to Terms and Conditions'
+                    />}
+                    style={{ padding: '0 0', fontSize: '14px' }}
                   />
-                  <span style={{display: 'inline-block', width: '80px'}}><a href={termsandconditions}><ErrorIcon style={{color: "#ff8400"}} /></a></span>
+                  <span style={{ display: 'inline-block', width: '80px' }}><a href={termsandconditions}><ErrorIcon style={{ color: "#ff8400" }} /></a></span>
                 </ListItem>
               </div>
             ))}
