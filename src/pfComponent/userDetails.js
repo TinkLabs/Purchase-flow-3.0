@@ -34,7 +34,7 @@ class Userdetails extends Component {
     }
     handleChange1(e){
         this.setState({value1: e.target.value});
-        if(e.target.value.length == 0){
+        if(e.target.value.length === 0){
             document.getElementById('1').style.border = '1px solid #ff8400';
         }else{
             document.getElementById('1').style.border = 'none';
@@ -45,7 +45,7 @@ class Userdetails extends Component {
 
     handleChange2(e){
         this.setState({value2: e.target.value});
-        if(e.target.value.length == 0){
+        if(e.target.value.length === 0){
             document.getElementById('2').style.border = '1px solid #ff8400';
         }else{
             document.getElementById('2').style.border = 'none';

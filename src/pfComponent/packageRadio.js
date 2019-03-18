@@ -8,13 +8,6 @@ import FormControl from '@material-ui/core/FormControl';
 
 import AlertDialog from './packageInclusion'
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
-import Avatar from '@material-ui/core/Avatar';
-import Paper from '@material-ui/core/Paper';
 import ErrorIcon from '@material-ui/icons/ErrorOutline';
 import renderHTML from 'react-render-html';
 
@@ -42,14 +35,13 @@ class PackageRadio extends React.Component {
     }
 
     radioChange(displayPrice, event) {
-        console.log(displayPrice, event.target.id, 2333);
         const packageInfo = {
             id: event.target.id,
             currency: displayPrice.currency,
         }
         this.props.getPackageInfo('packageInfo', packageInfo);
         this.setState({ value: event.target.value });
-        if (this.props.belowFlagOne || this.props.belowFlagTwo || this.props.selectIdPackageDateLengthTwo == 0 || this.props.quantityDisplay) {
+        if (this.props.belowFlagOne || this.props.belowFlagTwo || this.props.selectIdPackageDateLengthTwo === 0 || this.props.quantityDisplay) {
             this.props.onChangeAllFlag(false, 1, 'buttonText')
         }
     }
@@ -58,7 +50,7 @@ class PackageRadio extends React.Component {
         const { classes } = this.props;
         let packageList = [];
         let defaultTrue
-        if (this.props.packages != undefined) {
+        if (this.props.packages !== undefined) {
             packageList = this.props.packages
             // console.log(this.props.packages);
             for (let i = 0; i < packageList.length; i++) {
@@ -123,8 +115,7 @@ class PackageRadio extends React.Component {
                                         <div className='packageRadioLabelHead'>
                                             {number.title}
                                         </div>
-                                        {number.description.length > 0 && <div><span style={{display: 'inline-block',verticalAlign:'middle'}}><ErrorIcon style={{color: "#ff8400"}}/></span><span style={{display: 'inline-block'}}><AlertDialog description={renderHTML(number.description)}/></span></div>}
-
+                                        {number.description.length > 0 && <div><span style={{ display: 'inline-block', verticalAlign: 'middle' }}><ErrorIcon style={{ color: "#ff8400" }} /></span><span style={{ display: 'inline-block' }}><AlertDialog description={renderHTML(number.description)} /></span></div>}
                                         <div className='packageRadioLabelHeadBody'>
                                             <span>
                                                 {number.displayPrice.currency}
@@ -139,14 +130,14 @@ class PackageRadio extends React.Component {
                                             (number.showExtral && number.showMinimumExtral ?
                                                 <div className='extraDiscount'>
                                                     {/* <FormattedMessage
-                                                        id='minimumpax'
-                                                        defaultMessage='You must select {minimumpax} or more for this package'                                               
-                                                        values={{
-                                                            minimumpax: number.minimumPax
-                                                        }}
-                                                    /> */}
+                                                            id='minimumpax'
+                                                            defaultMessage='You must select {minimumpax} or more for this package'                                               
+                                                            values={{
+                                                                minimumpax: number.minimumPax
+                                                            }}
+                                                        /> */}
                                                     You must select {number.minimumPax} or more for this package
-                                                </div> :
+                                                    </div> :
                                                 <div className='extraDiscount'>
                                                     <FormattedMessage
                                                         id='buymore'

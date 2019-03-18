@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import '../App.css';
 
 //time slot
@@ -38,13 +37,12 @@ class Calendar extends React.Component {
        tmppackageidanother.unshift(nextProps.packageid);
        this.setState({packageidanother: tmppackageidanother});
        if(tmppackageidanother.length>=2){
-            if(tmppackageidanother[0] != tmppackageidanother[1]){
+            if(tmppackageidanother[0] !== tmppackageidanother[1]){
                 this.setState({currentIndex: null})
             }
        }
     }
     handleClick(event) {
-        console.log(event.currentTarget.getAttribute('prefereddatevalue'));
         if(event.currentTarget.getAttribute('prefereddatevalue') === '1'){
             this.setState({
                 currentIndex: parseInt(event.currentTarget.getAttribute('index')),
@@ -78,7 +76,7 @@ class Calendar extends React.Component {
                     prefereddateFlag[i] = 1;
                 }
             }
-            return (<li id="item">
+            return (<li id="item" key={i}>
                 <p>{week[day]}</p>
                 <p onClick={this.handleClick} prefereddatevalue={prefereddateFlag[i]} style={{color : (preferedDateFlag[i] ? '#000f23':'#e6e6e6')}} value={date < 10? '0'+date:date} index={i} className={this.state.currentIndex === i ? 'current' : ''}>{date < 10? '0'+date:date}</p>
             </li>)
@@ -108,7 +106,7 @@ class DatePicker extends React.Component {
     }
     handleDate(date){
         //点击date时 timeslot混滚初始位置。
-        if(this.state.selectDate){
+        if(this.state.selectDate && document.getElementsByClassName('leftslot')[0]!==undefined){         
             document.getElementsByClassName('leftslot')[0].scroll(0,0);
         }
         //傳所有時間到父組件
@@ -151,22 +149,21 @@ class DatePicker extends React.Component {
         let timeslotTittle = [];
         let preferedDate = [];
         let packageId;
-        if(this.props.packages != undefined){
-            console.log(typeof(this.props.packages.id));
+        if(this.props.packages !== undefined){
             packageId = Number(this.props.packages.id);
             for(let i = 0; i<this.props.packages.dates.length; i++){
                 preferedDate[i] = this.props.packages.dates[i].date.substring(8,10); //没有传来的date dimed禁止
-                if(pickDate == this.props.packages.dates[i].date.substring(8,10)){         
+                if(pickDate === this.props.packages.dates[i].date.substring(8,10)){       
                     timeslotTittle = this.props.packages.dates[i].timeslots;                   
                 }
             }
         }  
         const { classes } = this.props;
-        const week = ["Sun", "Mon", "Tue", "Wed", "Tur", "Fri", "Sat"];
+        // const week = ["Sun", "Mon", "Tue", "Wed", "Tur", "Fri", "Sat"];
         const Month = ['Jan', 'Fre', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov','Dec'];
         const now = new Date();
-        const day = now.getDay();
-        const date = now.getDate();
+        // const day = now.getDay();
+        // const date = now.getDate();
         const month = now.getMonth();
         const year = now.getFullYear();
         
@@ -202,7 +199,7 @@ class DatePicker extends React.Component {
                                 {   
                                     timeslotTittle.map(function (ele, index) {
                                         return (                          
-                                            <Button key={index} value={ele.id} time={ele.time} style={{borderColor: (that.currentindex == ele.id) ? '#ff8400':'',color: (that.currentindex == ele.id) ? '#ff8400':''}} variant="outlined" onClick={that.handleTimaslotId} className={classes.button}>
+                                            <Button key={index} value={ele.id} time={ele.time} style={{borderColor: (that.currentindex === ele.id) ? '#ff8400':'',color: (that.currentindex === ele.id) ? '#ff8400':''}} variant="outlined" onClick={that.handleTimaslotId} className={classes.button}>
                                                 {ele.title}
                                             </Button>    
                                         )

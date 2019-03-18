@@ -18,7 +18,6 @@ const styles = theme => ({
         backgroundColor: '#ff8400',
         width: '100%',
         color: '#fff',
-        boxShadow: 'none',
         borderRadius: '4px',
         textTransform: 'uppercase',
         alignItems: 'center',
@@ -54,19 +53,22 @@ class BottomButton extends React.Component{
     componentWillReceiveProps(nextProps){
         this.setState({userInf: nextProps.verifyUserInf});
         //接收父组件buttonText重新点击apply remove 来显示下面模块
-        if(this.state.userInf.buttonText == 'buttonTextone'){
+        if(this.state.userInf.buttonText === 'buttonTextone'){
             this.setState({bottonButtonText : 'CONFIRM',sum: 1});
             // this.state.sum = 0;
         };
-        if(this.state.userInf.buttonText == 'buttonTexttwo'){      //接收父组件的buttonText重新点击quantity 来显示下面模块
+        if(this.state.userInf.buttonText === 'buttonTexttwo'){      //接收父组件的buttonText重新点击quantity 来显示下面模块
             this.setState({bottonButtonText : 'NEXT',sum: 1});
             this.state.userInf.buttonText = ''; //清空， 防止其他点击时 又执行这一步；  巨坑
             // this.state.sum = 0;
         }
-        if(this.state.userInf.buttonText == 'buttonTextthree'){      //接收父组件的buttonText重新点击select quantity 来显示下面模块
+        if(this.state.userInf.buttonText === 'buttonTextthree'){      //接收父组件的buttonText重新点击select quantity 来显示下面模块
             this.setState({bottonButtonText : 'NEXT', sum: 0});
             this.state.userInf.buttonText = ''; //清空， 防止其他点击时 又执行这一步；  巨坑
-            document.getElementById('bottomButton').setAttribute('disabled', 'true')
+            if(document.getElementById('bottomButton') !== null){
+                document.getElementById('bottomButton').setAttribute('disabled', 'true')
+            }
+            
         }
         
         

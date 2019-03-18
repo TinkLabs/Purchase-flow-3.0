@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
 
@@ -63,7 +62,7 @@ class Quantity extends Component {
             this.state.peopleandPrice.title[i] = this.state.dealitemTypes[i].title;
             this.state.peopleandPrice.id[i] = this.state.dealitemTypes[i].id;
             //判断购买上限 不能超过package里的maximumPax
-            if(this.state.dealitemTypes[i].maxQuantity != -1){
+            if(this.state.dealitemTypes[i].maxQuantity !== -1){
                 this.state.maxQuantity[i] = this.state.dealitemTypes[i].maxQuantity > this.props.packages.maximumPax ? this.props.packages.maximumPax : this.state.dealitemTypes[i].maxQuantity;
             }else{
                 this.state.maxQuantity[i] = this.props.packages.maximumPax;
@@ -81,7 +80,7 @@ class Quantity extends Component {
 
             //查找default=true的price
             let dealItemPrice = this.state.dealitemTypes[i].prices.find(function(ele){
-                return ele.default == true;
+                return ele.default === true;
             });
             this.backforward[i] = [];
             this.backforward[i].push(dealItemPrice.unitPrice);
@@ -94,25 +93,23 @@ class Quantity extends Component {
 
             //查找default=false的price
             let dealItemPriceFalse = this.state.dealitemTypes[i].prices.filter(function(ele){
-                return ele.default != true;
+                return ele.default !== true;
             });            
             this.state.dealItemPriceFalseArray[i] = dealItemPriceFalse;
             //buy more reminder的初始状态 与初始化过滤计算
             this.state.isdiscountReminderDisplay[i] = false;
             this.displayDiscountedpriceReminder(this.state.quantity[i]+1, i, this.state.unitPrice[i]);
-            console.log(this.backremindflag);
         }
         this.props.handlepeopleandPrice(this.state.peopleandPrice); //子传父传peopleandprice
     }
     
     //加1过程判断是否显示discountedpriceReminder
     displayDiscountedpriceReminder(currentQuantity, index, currentdiscountPrice){
-        console.log(currentdiscountPrice);
         //每次需要清空操作
         this.state.meetConditionPrices = [];
         for(let j=0; j<this.state.dealItemPriceFalseArray[index].length; j++){
             if(this.state.dealItemPriceFalseArray[index][j].conditions.quantity && this.state.dealItemPriceFalseArray[index][j].conditions.timeslot){
-                if(((currentQuantity>=this.state.dealItemPriceFalseArray[index][j].conditions.quantity.minimum) && (currentQuantity<=this.state.dealItemPriceFalseArray[index][j].conditions.quantity.maximum)) && (this.state.transferTimaslotId == this.state.dealItemPriceFalseArray[index][j].conditions.timeslot.id)){
+                if(((currentQuantity>=this.state.dealItemPriceFalseArray[index][j].conditions.quantity.minimum) && (currentQuantity<=this.state.dealItemPriceFalseArray[index][j].conditions.quantity.maximum)) && (this.state.transferTimaslotId === this.state.dealItemPriceFalseArray[index][j].conditions.timeslot.id)){
                     this.state.meetConditionPrices.push(this.state.dealItemPriceFalseArray[index][j]);
                 }
             }else if(this.state.dealItemPriceFalseArray[index][j].conditions.quantity){
@@ -124,7 +121,6 @@ class Quantity extends Component {
         this.state.meetConditionPrices.sort(function(a,b){
             return a.priority - b.priority;
         })
-        console.log(this.state.meetConditionPrices);
         if(this.state.meetConditionPrices.length>0){
             if(this.state.meetConditionPrices[this.state.meetConditionPrices.length-1].unitPrice < currentdiscountPrice){ 
                     this.state.numbermore[index] =  this.state.meetConditionPrices[this.state.meetConditionPrices.length-1].conditions.quantity.minimum;                                         
@@ -149,7 +145,7 @@ class Quantity extends Component {
         this.state.meetConditionPrices = [];
         for(let j=0; j<this.state.dealItemPriceFalseArray[index].length; j++){
             if(this.state.dealItemPriceFalseArray[index][j].conditions.quantity && this.state.dealItemPriceFalseArray[index][j].conditions.timeslot){
-                if(((currentQuantity+1>=this.state.dealItemPriceFalseArray[index][j].conditions.quantity.minimum) && (currentQuantity+1<=this.state.dealItemPriceFalseArray[index][j].conditions.quantity.maximum)) && (this.state.transferTimaslotId == this.state.dealItemPriceFalseArray[index][j].conditions.timeslot.id)){
+                if(((currentQuantity+1>=this.state.dealItemPriceFalseArray[index][j].conditions.quantity.minimum) && (currentQuantity+1<=this.state.dealItemPriceFalseArray[index][j].conditions.quantity.maximum)) && (this.state.transferTimaslotId === this.state.dealItemPriceFalseArray[index][j].conditions.timeslot.id)){
                     this.state.meetConditionPrices.push(this.state.dealItemPriceFalseArray[index][j]);
                 }
             }else if(this.state.dealItemPriceFalseArray[index][j].conditions.quantity){
@@ -157,7 +153,7 @@ class Quantity extends Component {
                     this.state.meetConditionPrices.push(this.state.dealItemPriceFalseArray[index][j]);
                 }
             }else if(this.state.dealItemPriceFalseArray[index][j].conditions.timeslot){
-                if(this.state.transferTimaslotId == this.state.dealItemPriceFalseArray[index][j].conditions.timeslot.id){
+                if(this.state.transferTimaslotId === this.state.dealItemPriceFalseArray[index][j].conditions.timeslot.id){
                     this.state.meetConditionPrices.push(this.state.dealItemPriceFalseArray[index][j]);
                 }
             }
@@ -167,8 +163,7 @@ class Quantity extends Component {
         })
   
         if(this.state.meetConditionPrices.length>0){
-            if(this.state.meetConditionPrices[this.state.meetConditionPrices.length-1].unitPrice < currentdiscountPrice){
-                console.log(this.state.meetConditionPrices[this.state.meetConditionPrices.length-1].unitPrice);                             
+            if(this.state.meetConditionPrices[this.state.meetConditionPrices.length-1].unitPrice < currentdiscountPrice){                            
                 let newdiscountprice = this.state.meetConditionPrices[this.state.meetConditionPrices.length-1].unitPrice;          
                 this.state.peopleandPrice.price[index] = newdiscountprice; //加操作后的新的折扣价存储起来传给父组件
                 this.state.afterAddDiscount[index] = newdiscountprice; //这里赋值传给discountreminder函数
@@ -207,7 +202,6 @@ class Quantity extends Component {
         }
         this.getMeetConditionPricesByAdd(currentQuantity,index,e.currentTarget.getAttribute('currentdiscountprice'));
         this.displayDiscountedpriceReminder(currentQuantity+2,index,this.state.afterAddDiscount[index]);
-        console.log(this.backremindflag);
         //数量加一操作 考虑的情况有点多
         if(this.state.dealitemTypes[index].maxQuantity === -1){
             if(totalnum < this.state.maxQuantity[index]){
@@ -217,7 +211,6 @@ class Quantity extends Component {
                     this.state.peopleandPrice.number[index] = this.state.quantity[index]; //加操作后的新的票数存储起来传给父组件
                 });  
                 this.backforward[index].push(this.tempuniteprice);        
-                console.log(this.state.peopleandPrice);
             }else{             
                 this.handleClick(this.state.maxQuantity[index]);
                 //3.5s后warnmessage消失
@@ -235,7 +228,6 @@ class Quantity extends Component {
                         this.state.peopleandPrice.number[index] = this.state.quantity[index]; //加操作后的新的票数存储起来传给父组件
                     });
                     this.backforward[index].push(this.tempuniteprice);          
-                    console.log(this.state.peopleandPrice);
                 }else{
                     this.handleClick(this.state.maxQuantity[index]);
                     //3.5s后warnmessage消失
@@ -252,7 +244,6 @@ class Quantity extends Component {
                         this.state.peopleandPrice.number[index] = this.state.quantity[index]; //加操作后的新的票数存储起来传给父组件
                     }); 
                     this.backforward[index].push(this.tempuniteprice);         
-                    console.log(this.state.peopleandPrice);
                 }else{
                     this.handleClick(this.state.maxQuantity[index]);
                     //3.5s后warnmessage消失
@@ -324,7 +315,7 @@ class Quantity extends Component {
                 </div>
                 {this.state.dealitemTypes.map(function (ele, index) {
                     return (
-                        <div>
+                        <div key={index}>
                             <Grid container spacing={24} key={index}>
                                 <Grid item xs={8}>
                                     <div className={classes.paper} style={{height:'80px'}}>

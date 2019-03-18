@@ -8,7 +8,6 @@ import Userdetails from './pfComponent/userDetails'
 import QuestionList from './pfComponent/questionList'
 import Promotionlist from './pfComponent/promotionList'
 import Confirmation from './pfComponent/confirmation'
-import PaymentMethod from './pfComponent/paymentMethod'
 import BottomButton from './pfComponent/bottomButton'
 // import SelectPackage from './pfComponent/package'
 import PackageRadio from './pfComponent/packageRadio'
@@ -22,7 +21,7 @@ import PropTypes from 'prop-types';
 import request from './api/request';
 import utils from './utils';
 
-import { addLocaleData, IntlProvider, FormattedMessage } from 'react-intl';
+import { addLocaleData, IntlProvider } from 'react-intl';
 import zh_CN from './locale/zh_CN';
 import en_US from './locale/en_US';
 import ar_AR from './locale/ar_AR';
@@ -146,52 +145,36 @@ class App extends Component {
     switch (this.state.handyInfo.device_locale) {
       case 'en_US':
         return 'en';
-        break;
       case 'zh_CN':
         return 'zh';
-        break;
       case 'ar_AR':
         return 'ar';
-        break;
       case 'de_DE':
         return 'de';
-        break;
       case 'es_ES':
         return 'es';
-        break;
       case 'fr_FR':
         return 'fr';
-        break;
       case 'hu_HU':
         return 'hu';
-        break;
       case 'it_IT':
         return 'it';
-        break;
       case 'ja_JP':
         return 'ja';
-        break;
       case 'ko_KR':
         return 'ko';
-        break;
       case 'pl_PL':
         return 'pl';
-        break;
       case 'pt_PT':
         return 'pt';
-        break;
       case 'ru_RU':
         return 'ru';
-        break;
       case 'th_TH':
         return 'th';
-        break;
       case 'zh_TW':
         return 'zh';
-        break;
       default:
         return 'en';
-        break;
     }
   }
   //暫時沒用
@@ -209,7 +192,6 @@ class App extends Component {
         timeslotlength = this.state.selectIdPackage.dates[i].timeslots.length;
       }
     };
-    console.log(timeslotlength);
     if (timeslotlength > 0) {
       this.setState({
         selectedDate: date,
@@ -272,7 +254,7 @@ class App extends Component {
         })
       }
       //需要在这里判断是否要将打折信息传到comfirmation 组件单中 当然这里仅适用于一个promotions情况
-      if(this.state.promotionList.length !=0){
+      if(this.state.promotionList.length !==0){
         this.promotionItem = {
           id: this.state.promotionList[0].id,
           title: this.state.promotionList[0].title,
@@ -314,7 +296,7 @@ class App extends Component {
       applyandRemove: flagNext //用来控制 apply remove 再第一次点击confirm后  保持不变
     });
     //接收点击apply remove 传过来的false
-    if (flag == false) {
+    if (flag === false) {
       const tmpConfirmInfo = this.state.confirmInfo;
       tmpConfirmInfo[index] = 'buttonTextone';
       this.setState({
@@ -398,7 +380,7 @@ class App extends Component {
           <PackageRadio packages={this.state.packages} getPackageInfo={this.handleConfirmInfo} onChangeAllFlag={this.changeAllFlag} belowFlagOne={this.state.nextstate} belowFlagTwo={this.state.afterFirstConfirm} selectIdPackageDateLengthTwo={this.state.selectIdPackageDateLengthTwo} quantityDisplay={this.state.quantityDisplay} />
           {/* <SelectTime /> */}
           {this.state.selectIdPackageDateLength > 0 && <DatePicker packages={this.state.selectIdPackage} onChangeHandledates={this.handleSelectedDate} onChangeTimeslotId={this.handleTimeslotId} onHandleBelowFlag={this.handleBelowFlag} belowFlagOne={this.state.nextstate} belowFlagTwo={this.state.afterFirstConfirm} />}
-          {(this.state.quantityDisplay || (this.state.selectIdPackageDateLengthTwo == 0 && this.state.controlQuantity)) && <Quantity packages={this.state.selectIdPackage} confirmInfo={this.state.confirmInfo} dealitemTypes={this.state.dealitemTypes} timeslotId={this.state.timeslotId} handlepeopleandPrice={this.peopleandPrice} onHandleBelowFlag={this.handleBelowFlag} belowFlagOne={this.state.nextstate} belowFlagTwo={this.state.afterFirstConfirm} />}
+          {(this.state.quantityDisplay || (this.state.selectIdPackageDateLengthTwo === 0 && this.state.controlQuantity)) && <Quantity packages={this.state.selectIdPackage} confirmInfo={this.state.confirmInfo} dealitemTypes={this.state.dealitemTypes} timeslotId={this.state.timeslotId} handlepeopleandPrice={this.peopleandPrice} onHandleBelowFlag={this.handleBelowFlag} belowFlagOne={this.state.nextstate} belowFlagTwo={this.state.afterFirstConfirm} />}
           {this.state.nextstate && <Userdetails getUserInfo={this.handleConfirmInfo} />}
           {this.state.nextstate && this.state.questions &&
             <QuestionList

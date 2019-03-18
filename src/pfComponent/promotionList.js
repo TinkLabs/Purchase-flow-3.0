@@ -14,7 +14,6 @@ import { FormattedMessage } from 'react-intl';
 class Promotionlist extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props.peopleandprice);
     this.state = {
       open: false,
       promotionList: [],
@@ -44,8 +43,7 @@ class Promotionlist extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.state.promotionList = nextProps.promotionList;
-        console.log(nextProps.promotionList);
-        if (nextProps.peopleandprice != undefined) {
+        if (nextProps.peopleandprice !== undefined) {
           let totalnum = 0;
           this.state.peopleandprice = nextProps.peopleandprice;
   
@@ -80,7 +78,7 @@ class Promotionlist extends React.Component {
 
   //promotionlist 里面只能选择一个折扣价
   useApplyOnce(index){
-    if (this.state.usediscountedPrice[index] == true) {
+    if (this.state.usediscountedPrice[index] === true) {
       let temp = { ...this.state.usediscountedPrice, [index]: !this.state.usediscountedPrice[index] }
       this.setState({
         usediscountedPrice: temp
@@ -134,7 +132,6 @@ class Promotionlist extends React.Component {
 
 
   render() {
-    console.log(this.state.peopleandprice);
     let that = this;
     let promotionList = this.state.promotionList;
     return (

@@ -52,7 +52,6 @@ const styles = theme => ({
   class Confirmation extends React.Component {
     constructor(props) {
       super(props)
-      console.log(props, 29999)
       this.state = {
         selectedIndex: 1,
         questionList: [],
@@ -204,7 +203,7 @@ const styles = theme => ({
               </ListItem>
             ))}
             {[1].map(value => (
-              <div>
+              <div key={value}>
                 <ListItem key={value} role={undefined} dense button onClick={this.handleToggle(value)}>
                   <Checkbox
                     checked={this.state.checked.indexOf(value) !== -1}
