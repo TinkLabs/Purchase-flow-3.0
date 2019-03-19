@@ -128,7 +128,14 @@ class PackageRadio extends React.Component {
                                         </div>
                                         {number.showExtral || number.showMinimumExtral ?
                                             (number.showExtral && number.showMinimumExtral ?
-                                                <div className='extraDiscount'>
+                                                <div>
+                                                    <div className='extraDiscount'>
+                                                        <FormattedMessage
+                                                            id='buymore'
+                                                            defaultMessage='Buy more for extra discount'
+                                                        />
+                                                     </div>
+                                                    <div className='extraDiscount'>
                                                     {/* <FormattedMessage
                                                             id='minimumpax'
                                                             defaultMessage='You must select {minimumpax} or more for this package'                                               
@@ -137,13 +144,18 @@ class PackageRadio extends React.Component {
                                                             }}
                                                         /> */}
                                                     You must select {number.minimumPax} or more for this package
-                                                    </div> :
-                                                <div className='extraDiscount'>
-                                                    <FormattedMessage
-                                                        id='buymore'
-                                                        defaultMessage='Buy more for extra discount'
-                                                    />
+                                                    </div>
                                                 </div>
+                                                 :
+                                                 (number.showExtral?
+                                                    <div className='extraDiscount'>
+                                                        <FormattedMessage
+                                                            id='buymore'
+                                                            defaultMessage='Buy more for extra discount'
+                                                        />
+                                                    </div>:''
+                                                )
+                                               
                                             ) : ''
                                         }
                                     </div>}
