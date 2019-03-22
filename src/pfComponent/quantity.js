@@ -354,7 +354,7 @@ class Quantity extends Component {
                                             <span className='quantityInitialPrice'>{currency} {that.state.unitPrice[index]}</span>
                                             <span className='midDelete'>{that.state.originalPrice[index] > that.state.unitPrice[index] ? currency + that.state.originalPrice[index] : null }</span>
                                         </div>
-                                        {that.state.isdiscountReminderDisplay[index] && <div id='morediscount' style={{ textAlign: 'left' }}>Buy {that.state.numbermore[index]} more to save {currency} {that.state.morediscountprice[index]}</div>}
+                                        {that.state.isdiscountReminderDisplay[index] && <div id='morediscount' style={{ textAlign: 'left', fontSize:'14px' }}>Buy {that.state.numbermore[index]} more to save {currency} {that.state.morediscountprice[index]}</div>}
                                         
                                     </div>
                                 </Grid>
